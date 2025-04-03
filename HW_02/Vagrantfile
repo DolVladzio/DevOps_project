@@ -2,18 +2,35 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
+    ############################################################
     config.vm.define "server_1" do |server_1|
-      config.vm.box = "ubuntu/trusty64"
-      config.vm.network "private_network", ip: "192.168.56.99"
-    end
+      server_1.vm.box = "ubuntu/trusty64"
+      server_1.vm.network "private_network", ip: "192.168.56.99"
 
+      server_1.vm.provider "virtualbox" do |vb|
+        vb.memory = "2048"
+        vb.cpus = 2
+      end
+    end
+    ############################################################ 
     config.vm.define "server_2" do |server_2|
-      config.vm.box = "ubuntu/trusty64"
-      config.vm.network "private_network", ip: "192.168.56.45"
-    end
+      server_2.vm.box = "ubuntu/trusty64"
+      server_2.vm.network "private_network", ip: "192.168.56.45"
 
-    config.vm.define "server_3" do |server_3|
-      config.vm.box = "ubuntu/trusty64"
-      config.vm.network "private_network", ip: "192.168.56.190"
+      server_2.vm.provider "virtualbox" do |vb|
+        vb.memory = "2048"
+        vb.cpus = 2
+      end
     end
+    ############################################################
+    config.vm.define "server_3" do |server_3|
+      server_3.vm.box = "ubuntu/trusty64"
+      server_3.vm.network "private_network", ip: "192.168.56.190"
+
+      server_3.vm.provider "virtualbox" do |vb|
+        vb.memory = "2048"
+        vb.cpus = 2
+      end
+    end
+    ############################################################
 end
