@@ -19,14 +19,20 @@ echo "- Was found: $svc_count service(-s)"
 lineFunc
 
 cat $svc_file
+# STARTED/STOPPED SERVICES ###################################
+svc_started=0
+svc_stopped=0
+
+while IFS= read line; do
+        if [[ $line == *"Finished Install"* ]]; then
+                ((svc_started++))
+        elif [[ $line == *"Finished Remove"* ]]; then
+                ((svc_stopped++))
+        fi
+done < $main_file
 
 lineFunc
-# STARTED SERVICES ###################################
 
-# STOPPED SERVICES ###################################
-echo "- Stopped service(-s)"
-
-grep -iE "false" $main_file
-
-lineFunc
+echo "- Finished service(-s): $svc_stopped"
+echo "- Started service(-s): $svc_started"
 ######################################################
