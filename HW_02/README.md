@@ -5,9 +5,9 @@
 git clone https://github.com/DolVladzio/DevOps_project.git && cd DevOps_project
 ```
 
-- :
+- Generate ssh keys:
 ```sh
-
+mkdir ssh && cd ssh && ssh-keygen -t rsa -b 4096 -f id_rsa && cd ..
 ```
 
 - Using the Vargant command, setup vms:
