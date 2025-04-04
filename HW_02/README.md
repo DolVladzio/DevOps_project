@@ -1,6 +1,21 @@
 # Runbook to setup everything
 
-Then you need to use this command:
+- First you have to clone this repository:
+```sh
+git clone https://github.com/DolVladzio/DevOps_project.git && cd DevOps_project
+```
+
+- :
+```sh
+
+```
+
+- Using the Vargant command, setup vms:
+```sh
+vagrant up
+```
+
+- Then you need to use this command:
 ```sh
 cat /vagrant/ssh/id_rsa > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
 ```
