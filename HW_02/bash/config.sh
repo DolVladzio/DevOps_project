@@ -21,6 +21,10 @@ else
 	echo "Public key not found at /vagrant/id_rsa.pub"
 fi
 ############################################################
-# Configure to launch the file every 5m
-echo "*/5 * * * * ~/vagrant/bash/sent_logs.sh" | crontab -e sftpuser -
+# Copy file/Configure to launch the file every 5m
+cp /vagrant/bash/sent_logs.sh /home/sftpuser/sent_logs.sh
+chmod +x /home/sftpuser/sent_logs.sh
+chown sftpuser:sftpuser /home/sftpuser/sent_logs.sh
+
+echo "*/5 * * * * /home/sftpuser/sent_logs.sh" | crontab -e sftpuser -
 ############################################################
