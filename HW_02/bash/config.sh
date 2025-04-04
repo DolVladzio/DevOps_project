@@ -22,5 +22,5 @@ else
 fi
 ############################################################
 # Configure to launch the file every 5m
-
+echo "*/5 * * * * ~/vagrant/bash/sent_logs.sh" | crontab -e sftpuser -
 ############################################################
