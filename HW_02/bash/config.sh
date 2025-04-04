@@ -13,7 +13,7 @@ chmod 700 /home/sftpuser/.ssh
 
 # Add public key from shared folder
 if [[ -f /vagrant/ssh/id_rsa.pub ]]; then
-	cat /vagrant/ssh/id_rsa > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+	# Add the public key
 	cat /vagrant/ssh/id_rsa.pub >> /home/sftpuser/.ssh/authorized_keys
 	chmod 600 /home/sftpuser/.ssh/authorized_keys
 	chown -R sftpuser:sftpuser /home/sftpuser/.ssh
