@@ -14,3 +14,8 @@ mkdir ssh && cd ssh && ssh-keygen -t rsa -b 4096 -f id_rsa && cd ..
 ```sh
 vagrant up
 ```
+
+- After all vms were launched, run this command:
+```sh
+ssh -o StrictHostKeyChecking=no -i .\ssh\id_rsa sftpuser@xxx.xxx.xxx.xxx
+```
