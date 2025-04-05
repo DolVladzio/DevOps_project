@@ -2,7 +2,7 @@
 ############################################################
 # Install OpenSSH
 sudo apt update && \
-	sudo apt install -y openssh-server
+	sudo apt install -y openssh-server rkhunter --no-install-recommends
 
 # Create the SFTP user if not exists
 id -u sftpuser &>/dev/null || useradd -m -s /bin/bash sftpuser
@@ -38,4 +38,7 @@ if [[ -f /vagrant/bash/sent_logs.sh ]]; then
 else
 	echo "- The file 'sent_logs.sh' wasn't found at /vagrant/bash/sent_logs.sh"
 fi
+############################################################
+rkhunter --update
+rkhunter --propupd
 ############################################################
