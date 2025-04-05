@@ -14,8 +14,3 @@ mkdir ssh && cd ssh && ssh-keygen -t rsa -b 4096 -f id_rsa && cd ..
 ```sh
 vagrant up
 ```
-
-- Then you need to use this command:
-```sh
-cat /vagrant/ssh/id_rsa > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-```
