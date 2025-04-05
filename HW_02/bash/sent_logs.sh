@@ -19,7 +19,7 @@ for i in "${neighbors_ip[@]}"; do
 	# Put the log' info into the file
 	file_content="- Created by: $HOSTNAME
 - Date-Time: $date_time
-#======================================="
+#----------------------------------"
 
 	echo "$file_content" | ssh sftpuser@$i "cat >> /home/sftpuser/$file_name"
 done
