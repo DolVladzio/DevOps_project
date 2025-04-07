@@ -17,7 +17,7 @@ fi
 ############################################################
 for i in "${neighbors_ip[@]}"; do
 	# Put the log' info into the file
-	file_content="$date_time | Connection created by $HOSTNAME to $i"
+	file_content="$date_time | Successful connection created by $HOSTNAME"
 
 	echo "$file_content" | ssh sftpuser@$i "cat >> /home/sftpuser/$file_name"
 done
