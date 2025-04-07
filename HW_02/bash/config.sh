@@ -32,9 +32,9 @@ if [[ -f /vagrant/bash/sent_logs.sh ]]; then
 	cp /vagrant/bash/sent_logs.sh /home/sftpuser/sent_logs.sh
 	chmod +x /home/sftpuser/sent_logs.sh
 	chown -R sftpuser:sftpuser /home/sftpuser/sent_logs.sh
-
+	
 	# Configure to launch the file every 5m
-	echo "*/5 * * * * /home/sftpuser/sent_logs.sh" | crontab -u sftpuser -
+	echo "*/5 * * * * /home/sftpuser/sent_logs.sh" | crontab -u sftpuser - && bash sent_logs.sh
 else
 	echo "- The file 'sent_logs.sh' wasn't found at /vagrant/bash/sent_logs.sh"
 fi
