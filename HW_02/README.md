@@ -1,6 +1,8 @@
 # Runbook to setup everything
 
-- First you have to clone this repository:
+## First you need to setup all vms! 
+
+- You have to clone this repository:
 ```sh
 git clone https://github.com/DolVladzio/DevOps_project.git && cd DevOps_project
 ```
@@ -10,7 +12,7 @@ git clone https://github.com/DolVladzio/DevOps_project.git && cd DevOps_project
 mkdir ssh && cd ssh && ssh-keygen -t rsa -b 4096 -f id_rsa && cd ..
 ```
 
-- Using the Vargant command, setup vms:
+- Using the Vargant command, setup all vms:
 ```sh
 vagrant up
 ```
