@@ -100,7 +100,7 @@ def insertLogs():
         for ip in vm_ipc:
             print(f"----------------------------\n- Connecting to {ip}...")
             ssh.connect(hostname=ip, username=vm_username, pkey=key)
-            print(f"- Connected to {ip}")
+            print(f"- Connected to {ip}\n")
 
             sftp = ssh.open_sftp()
             with sftp.file(logs_file_path, "r") as remote_file:
