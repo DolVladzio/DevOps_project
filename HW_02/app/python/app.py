@@ -4,6 +4,10 @@ import os
 import re
 import psycopg2
 from psycopg2 import sql
+
+from flask import Flask, render_template
+
+app = Flask(__name__)
 ##############################################################################
 db_name = "logsdatabase"
 db_username = "postgres"
@@ -42,14 +46,23 @@ def createDB():
             print("- DB's connection closed.\n-----------------------------")
 ##############################################################################
 def DBConnection():
-    db_connection = psycopg2.connect(
-        dbname=db_name,
-        user=db_username,
-        password=db_password,
-        host=db_host
-    )
-    db_connection.autocommit = True
-    return db_connection
+    try:
+        print(f"- Connecting to the database {db_name}...")
+        db_connection = psycopg2.connect(
+            dbname=db_name,
+            user=db_username,
+            password=db_password,
+            host=db_host
+        )
+        cursor = db_connection.cursor()
+        db_connection.autocommit = True
+
+        print(f"- Connected to the database: {db_name}")
+        return db_connection, cursor 
+    
+    except Exception as e:
+        print(f"Failed to connect to the database: {e}")
+        raise
 ##############################################################################
 def createTable():
     try:
@@ -138,9 +151,38 @@ def insertLogs():
             db_connection.close()
             print("- DB's connection closed.\n-----------------------------")
 ##############################################################################
+@app.route("/")
+def showLogs():
+    db_connection = None
+    cursor = None
+    try:
+        # Connect to the database
+        db_connection, cursor = DBConnection()
+
+        # Execute the query
+        cursor.execute(f"SELECT * FROM {db_table_name};")
+        
+        # Fetch logs and pass them to the template directly
+        logs = cursor.fetchall()
+
+        return render_template("logs.html", logs=logs)
+
+    except Exception as e:
+        return render_template("error.html", error_message=f"An error occurred: {e}")
+
+    finally:
+        if cursor:
+            cursor.close()
+        # Close the database connection
+        if db_connection:
+            cursor.close()
+            db_connection.close()
+##############################################################################
 if __name__ == "__main__":
     createDB()
     createTable()
     insertLogs()
     print("\n- All tasks completed successfully.")
+
+    app.run(debug=True)
 ##############################################################################
