@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        p {
+            text-align: center;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Logs</h1>
+    {% if logs %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Date Time</th>
+                <th>Text</th>
+            </tr>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log[0] }}</td>
+                <td>{{ log[1] }}</td>
+                <td>{{ log[2] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No logs found in the database.</p>
+    {% endif %}
+</body>
+</html>
