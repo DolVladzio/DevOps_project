@@ -66,7 +66,7 @@ private_key_path = os.path.expanduser("~/.ssh/id_rsa")
 logs_file_path = "/home/sftpuser/logs_info.txt"
 
 # Regular expression pattern to match date_time and text
-pattern = r"(?P<date_time>\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}) \| (?P<text>.+)"
+regex = r"(?P<date_time>\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}) \| (?P<text>.+)"
 
 try:
     # Reading the private key
@@ -78,7 +78,7 @@ try:
     for ip in vm_ipc:
         print(f"- Connecting to {ip}...")
         ssh.connect(hostname=ip, username=vm_username, pkey=key)
-        print(f"- Connected to {ip}\n")
+        print(f"- Connected to {ip}")
 
         # Use SFTP to retrieve the logs file
         sftp = ssh.open_sftp()
@@ -89,12 +89,13 @@ try:
 
         sftp.close()
 
-        for match in re.finditer(pattern, log_data):
+        # Extracting data from the file using regex
+        for match in re.finditer(regex, log_data):
             date_time = match.group("date_time")
             text = match.group("text")
             print(f"{date_time} | {text}")
 
-        print(f"- Logs retrieved successfully from {ip}.\n")
+        print(f"\n- Logs retrieved successfully from {ip}.\n")
 
 except Exception as e:
     print(f'- Something went wrong :( {e}')
