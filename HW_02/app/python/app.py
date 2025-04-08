@@ -15,21 +15,21 @@ db_username = "postgres"
 db_password = "devops"
 db_host = "127.0.0.1"
 db_table_name = "logs"
-
+############################################################
 def createDB():
     try:
         print("-----------------------------\n- Connecting to the database...")
         db_connection = psycopg2.connect(
-            dbname="postgres", 
-            user=db_username, 
-            password=db_password, 
+            dbname="postgres",
+            user=db_username,
+            password=db_password,
             host=db_host
         )
         print("- Connected to the database.\n")
 
         cursor = db_connection.cursor()
         db_connection.autocommit = True
-        
+
         # Create the new database
         try:
             print(f"- Creating the database: '{db_name}'...")
@@ -38,7 +38,7 @@ def createDB():
             print(f"- The database '{db_name}' created successfully.\n")
         except psycopg2.errors.DuplicateDatabase:
             print(f"- The database '{db_name}' already exists.\n")
-        
+
     except Exception as e:
         print(f'- An exception occurred :(\n{e}')
     finally:
@@ -47,18 +47,28 @@ def createDB():
             db_connection.close()
             print("- DB's connection closed.\n-----------------------------")
 ############################################################
-def createTable():
+def dbConnection():
     try:
         print(f"- Connecting to the database {db_name}...")
         db_connection = psycopg2.connect(
-            dbname=db_name, 
-            user=db_username, 
-            password=db_password, 
+            dbname=db_name,
+            user=db_username,
+            password=db_password,
             host=db_host
         )
-        print(f"- Connected to the database: {db_name}.\n")
         cursor = db_connection.cursor()
         db_connection.autocommit = True
+
+        print(f"- Connected to the database: {db_name}.\n")
+        return db_connection, cursor
+    except Exception as e:
+        print(f"- Failed to connect to the database: {e}")
+        raise
+############################################################
+def createTable():
+    try:
+        # Establish DB connection
+        db_connection, cursor = dbConnection()
 
         # Create the new table
         try:
@@ -71,11 +81,12 @@ def createTable():
             cursor.execute(sql)
             print(f"- The table '{db_table_name}' created successfully.\n")
         except Exception as e:
-            print(f"- The table '{db_table_name}' already exists.\n")
+            print(f"- An error occurred while creating the table: {e}")
 
     except Exception as e:
         print(f"- An exception occurred :(\n{e}")
     finally:
+        # Close connection and cursor safely
         if db_connection:
             cursor.close()
             db_connection.close()
