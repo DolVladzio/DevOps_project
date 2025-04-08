@@ -10,38 +10,76 @@ from psycopg2 import sql
 
 # app = Flask(__name__)
 ############################################################
-def createTable():
-    db_name = "LogsDatabase"
+db_name = "logsdatabase"
+db_username = "postgres"
+db_password = "devops"
+db_host = "127.0.0.1"
+db_table_name = "logs"
 
+def createDB():
     try:
-        print("- Connecting to the database...")
+        print("-----------------------------\n- Connecting to the database...")
         db_connection = psycopg2.connect(
             dbname="postgres", 
-            user="postgres", 
-            password="devops", 
-            host="127.0.0.1"
+            user=db_username, 
+            password=db_password, 
+            host=db_host
         )
         print("- Connected to the database.\n")
 
         cursor = db_connection.cursor()
         db_connection.autocommit = True
         
+        # Create the new database
         try:
-            # Create a new database
-            print(f"- Creating database '{db_name}'...")
+            print(f"- Creating the database: '{db_name}'...")
             sql = f"CREATE DATABASE {db_name};"
             cursor.execute(sql)
-            print(f"- Database '{db_name}' created successfully.\n")
-        except Exception as e:
-            print(f"- Database '{db_name}' already exists.\n")
-
+            print(f"- The database '{db_name}' created successfully.\n")
+        except psycopg2.errors.DuplicateDatabase:
+            print(f"- The database '{db_name}' already exists.\n")
+        
     except Exception as e:
         print(f'- An exception occurred :(\n{e}')
     finally:
         if db_connection:
             cursor.close()
             db_connection.close()
-            print("- DB's connection closed.")
+            print("- DB's connection closed.\n-----------------------------")
+############################################################
+def createTable():
+    try:
+        print(f"- Connecting to the database {db_name}...")
+        db_connection = psycopg2.connect(
+            dbname=db_name, 
+            user=db_username, 
+            password=db_password, 
+            host=db_host
+        )
+        print(f"- Connected to the database: {db_name}.\n")
+        cursor = db_connection.cursor()
+        db_connection.autocommit = True
+
+        # Create the new table
+        try:
+            print(f"- Creating the table '{db_table_name}'...")
+            sql = f'''CREATE TABLE IF NOT EXISTS {db_table_name} (
+                id SERIAL PRIMARY KEY,
+                date_time TIMESTAMP NOT NULL,
+                text TEXT NOT NULL
+            );'''
+            cursor.execute(sql)
+            print(f"- The table '{db_table_name}' created successfully.\n")
+        except Exception as e:
+            print(f"- The table '{db_table_name}' already exists.\n")
+
+    except Exception as e:
+        print(f"- An exception occurred :(\n{e}")
+    finally:
+        if db_connection:
+            cursor.close()
+            db_connection.close()
+            print("- DB's connection closed.\n-----------------------------")
 ############################################################
 # def insterLogs():
 #     vm_ipc = [
@@ -118,7 +156,7 @@ def createTable():
 # def showLogs():
 ############################################################
 if __name__ == "__main__":
-    # insterLogs()
+    createDB()
 
     createTable()
 ############################################################
