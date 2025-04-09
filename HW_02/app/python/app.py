@@ -187,7 +187,7 @@ def showLogs():
         db_connection, cursor = DBConnection()
 
         # Execute the query
-        cursor.execute(f"SELECT date_time, text, vm_name FROM {db_table_name};")
+        cursor.execute(f"SELECT date_time, text, vm_name FROM {db_table_name} ORDER BY date_time DESC;")
 
         # Fetch logs and pass them to the template directly
         logs = cursor.fetchall()
