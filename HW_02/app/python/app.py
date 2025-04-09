@@ -12,7 +12,7 @@ app = Flask(__name__)
 db_name = "logsdatabase"
 db_username = "postgres"
 db_password = "devops"
-db_host = "127.0.0.1"
+db_host = "db"
 db_table_name = "logs"
 ##############################################################################
 def DBConnection():
