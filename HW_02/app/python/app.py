@@ -121,31 +121,30 @@ def insertLogs():
             # Read command output and error
             hostname_output = stdout.read().decode('utf-8')
             hostname_error = stderr.read().decode('utf-8')
-
-            if hostname_output:
-                print(f"- VM's name: {hostname_output}")
+            
             if hostname_error:
                 print(f"Command Error: {hostname_error}")
 
             sftp = ssh.open_sftp()
             with sftp.file(logs_file_path, "r") as remote_file:
                 log_data = remote_file.read().decode("utf-8")
-
+                # Getting the logs from the file
                 for match in re.finditer(regex, log_data):
                     date_time = match.group("date_time").replace('_', ' ')
                     text = match.group("text")
+                    print(f"\n- Logs retrieved successfully from {ip}")
 
                     try:
+                        # Insert logs into the database
                         insert_query = sql.SQL("INSERT INTO {table} (date_time, text, vm_name) VALUES (%s, %s, %s);").format(
                             table=sql.Identifier(db_table_name)
                         )
                         cursor.execute(insert_query, (date_time, text, hostname_output))
-                        print(f"- Log inserted: {date_time} | {text} | {hostname_output}")
+                        # print(f"- Log: {date_time} | {text} | {hostname_output} was inserted successfully.")
                     except Exception as e:
-                        print(f"- Failed to insert logs for date_time: {date_time}, text: {text}, vm_name: {hostname_output}")
-                        print(f"  Error: {e}")
+                        print(f"- Failed to insert logs for date_time: {date_time}, text: {text}, vm_name: {hostname_output}\n- Error: {e}")
 
-                print(f"\n- Logs retrieved successfully from {ip}")
+                print("\n- Logs inserted successfully.")
 
         sftp.close()
 
