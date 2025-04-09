@@ -88,7 +88,7 @@ def createTable():
             db_connection.close()
             print("- DB's connection closed.\n-----------------------------")
 ##############################################################################
-def insertLogs():
+def getLogs():
     vm_ipc = [
         "192.168.56.101",
         "192.168.56.102",
@@ -119,7 +119,7 @@ def insertLogs():
             stdin, stdout, stderr = ssh.exec_command(command)
 
             # Read command output and error
-            hostname_output = stdout.read().decode('utf-8')
+            vm_name = stdout.read().decode('utf-8')
             hostname_error = stderr.read().decode('utf-8')
             
             if hostname_error:
@@ -132,18 +132,32 @@ def insertLogs():
                 for match in re.finditer(regex, log_data):
                     date_time = match.group("date_time").replace('_', ' ')
                     text = match.group("text")
-                    print(f"\n- Logs retrieved successfully from {ip}")
 
                     try:
-                        # Insert logs into the database
-                        insert_query = sql.SQL("INSERT INTO {table} (date_time, text, vm_name) VALUES (%s, %s, %s);").format(
-                            table=sql.Identifier(db_table_name)
-                        )
-                        cursor.execute(insert_query, (date_time, text, hostname_output))
-                        # print(f"- Log: {date_time} | {text} | {hostname_output} was inserted successfully.")
-                    except Exception as e:
-                        print(f"- Failed to insert logs for date_time: {date_time}, text: {text}, vm_name: {hostname_output}\n- Error: {e}")
+                        query = f"""
+                            SELECT COUNT(*)
+                            FROM {db_table_name}
+                            WHERE date_time = %s AND text = %s AND vm_name = %s;
+                        """
+                        cursor.execute(query, (date_time, text, vm_name))
+                        count = cursor.fetchone()[0]
 
+                        if count == 0:
+                            # Instering the logs into the database
+                            insert_query = sql.SQL("""
+                                INSERT INTO {table} (date_time, text, vm_name)
+                                VALUES (%s, %s, %s);
+                            """).format(
+                                table=sql.Identifier(db_table_name))
+                            cursor.execute(insert_query, (date_time, text, vm_name))
+                        
+                        else:
+                            print(f"- Duplicate log found, skipping.\n- Try again later.")
+                    
+                    except Exception as e:
+                        print(f'- An exception occurred:(\n{e}')
+
+                print(f"\n- Logs retrieved successfully from {ip}")
                 print("\n- Logs inserted successfully.")
 
         sftp.close()
@@ -167,7 +181,7 @@ def showLogs():
     db_connection = None
     cursor = None
 
-    insertLogs()
+    getLogs()
 
     try:
         # Connect to the database
