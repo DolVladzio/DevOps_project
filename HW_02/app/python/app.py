@@ -66,8 +66,7 @@ def DBConnection():
 ##############################################################################
 def createTable():
     try:
-        db_connection = DBConnection()
-        cursor = db_connection.cursor()
+        db_connection, cursor = DBConnection()
 
         print(f"- Creating the table '{db_table_name}'...")
         sql_command = sql.SQL('''CREATE TABLE IF NOT EXISTS {table} (
@@ -107,8 +106,7 @@ def insertLogs():
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-        db_connection = DBConnection()
-        cursor = db_connection.cursor()
+        db_connection, cursor = DBConnection()
 
         for ip in vm_ipc:
             print(f"----------------------------\n- Connecting to {ip}...")
