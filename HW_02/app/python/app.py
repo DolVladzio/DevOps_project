@@ -121,7 +121,7 @@ def getLogs():
             # Read command output and error
             vm_name = stdout.read().decode('utf-8')
             hostname_error = stderr.read().decode('utf-8')
-            
+
             if hostname_error:
                 print(f"Command Error: {hostname_error}")
 
@@ -150,15 +150,14 @@ def getLogs():
                             """).format(
                                 table=sql.Identifier(db_table_name))
                             cursor.execute(insert_query, (date_time, text, vm_name))
-                            print("\n- Logs inserted successfully.")
-                        
+
                         else:
                             continue
-                    
+
                     except Exception as e:
                         print(f'- An exception occurred:(\n{e}')
 
-                print(f"\n- Logs retrieved successfully from {ip}")
+                print(f"\n- Logs retrieved from {ip} were inserted successfully")
 
         sftp.close()
 
