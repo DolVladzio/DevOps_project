@@ -4,6 +4,4 @@ from app import createDB, createTable
 if __name__ == "__main__":
     createDB()
     createTable()
-
-    print("- All tasks completed successfully.")
 ##############################################################################

@@ -28,8 +28,8 @@ def DBConnection():
         db_connection.autocommit = True
 
         print(f"- Connected to the database: {db_name}\n")
-        return db_connection, cursor 
-    
+        return db_connection, cursor
+
     except Exception as e:
         print(f"Failed to connect to the database: {e}")
         raise
@@ -56,7 +56,7 @@ def createDB():
 
     except Exception as e:
         print(f'- An exception occurred :(\n{e}')
-    
+
     finally:
         # Close the database connection
         if db_connection:
@@ -72,14 +72,15 @@ def createTable():
         sql_command = sql.SQL('''CREATE TABLE IF NOT EXISTS {table} (
             id SERIAL PRIMARY KEY,
             date_time TIMESTAMP NOT NULL,
-            text TEXT NOT NULL
+            text TEXT NOT NULL,
+            vm_name VARCHAR(255) NOT NULL
         );''').format(table=sql.Identifier(db_table_name))
         cursor.execute(sql_command)
         print(f"- The table '{db_table_name}' created successfully.\n")
 
     except Exception as e:
         print(f"- An exception occurred :(\n{e}")
-    
+
     finally:
         # Close the database connection
         if db_connection:
@@ -87,93 +88,95 @@ def createTable():
             db_connection.close()
             print("- DB's connection closed.\n-----------------------------")
 ##############################################################################
-# def insertLogs():
-#     vm_ipc = [
-#         "192.168.56.101",
-#         "192.168.56.102",
-#         "192.168.56.103"
-#     ]
+def insertLogs():
+    vm_ipc = [
+        "192.168.56.101",
+        "192.168.56.102",
+        "192.168.56.103"
+    ]
 
-#     vm_username = "sftpuser"
-#     private_key_path = os.path.expanduser("~/.ssh/id_rsa")
-#     logs_file_path = "/home/sftpuser/logs_info.txt"
-#     regex = r"(?P<date_time>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) \| (?P<text>.+)"
-#     ssh = None
-#     db_connection = None
+    vm_username = "sftpuser"
+    private_key_path = os.path.expanduser("~/.ssh/id_rsa")
+    logs_file_path = "/home/sftpuser/logs_info.txt"
+    regex = r"(?P<date_time>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) \| (?P<text>.+)"
+    ssh = None
+    db_connection = None
 
-#     try:
-#         key = paramiko.RSAKey.from_private_key_file(private_key_path)
-#         ssh = paramiko.SSHClient()
-#         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    try:
+        key = paramiko.RSAKey.from_private_key_file(private_key_path)
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-#         db_connection, cursor = DBConnection()
+        db_connection, cursor = DBConnection()
 
-#         for ip in vm_ipc:
-#             print(f"----------------------------\n- Connecting to {ip}...")
-#             ssh.connect(hostname=ip, username=vm_username, pkey=key)
-#             print(f"- Connected to {ip}\n")
+        for ip in vm_ipc:
+            print(f"----------------------------\n- Connecting to {ip}...")
+            ssh.connect(hostname=ip, username=vm_username, pkey=key)
+            print(f"- Connected to {ip}\n")
 
-#             command = "hostname"
-#             # Execute the command to get vm name
-#             stdin, stdout, stderr = ssh.exec_command(command)
-            
-#             # Read command output and error
-#             output = stdout.read().decode('utf-8')
-#             error = stderr.read().decode('utf-8')
-            
-#             if output:
-#                 print(f"Command Output: {output}")
-#             if error:
-#                 print(f"Command Error: {error}")
+            command = "hostname"
+            # Execute the command to get vm name
+            stdin, stdout, stderr = ssh.exec_command(command)
 
-#             sftp = ssh.open_sftp()
-#             with sftp.file(logs_file_path, "r") as remote_file:
-#                 log_data = remote_file.read().decode("utf-8")
+            # Read command output and error
+            hostname_output = stdout.read().decode('utf-8')
+            hostname_error = stderr.read().decode('utf-8')
 
-#                 for match in re.finditer(regex, log_data):
-#                     date_time = match.group("date_time").replace('_', ' ')
-#                     text = match.group("text")
+            if hostname_output:
+                print(f"- VM's name: {hostname_output}")
+            if hostname_error:
+                print(f"Command Error: {hostname_error}")
 
-#                     try:
-#                         insert_query = sql.SQL("INSERT INTO {table} (date_time, text) VALUES (%s, %s);").format(
-#                             table=sql.Identifier(db_table_name)
-#                         )
-#                         cursor.execute(insert_query, (date_time, text))
-#                         print(f"- Log inserted: {date_time} | {text}")
-#                     except Exception as e:
-#                         print(f"- Failed to insert logs for date_time: {date_time}, text: {text}")
-#                         print(f"  Error: {e}")
+            sftp = ssh.open_sftp()
+            with sftp.file(logs_file_path, "r") as remote_file:
+                log_data = remote_file.read().decode("utf-8")
 
-#                 print(f"\n- Logs retrieved successfully from {ip}")
+                for match in re.finditer(regex, log_data):
+                    date_time = match.group("date_time").replace('_', ' ')
+                    text = match.group("text")
 
-#         sftp.close()
+                    try:
+                        insert_query = sql.SQL("INSERT INTO {table} (date_time, text, vm_name) VALUES (%s, %s, %s);").format(
+                            table=sql.Identifier(db_table_name)
+                        )
+                        cursor.execute(insert_query, (date_time, text, hostname_output))
+                        print(f"- Log inserted: {date_time} | {text} | {hostname_output}")
+                    except Exception as e:
+                        print(f"- Failed to insert logs for date_time: {date_time}, text: {text}, vm_name: {hostname_output}")
+                        print(f"  Error: {e}")
 
-#     except Exception as e:
-#         print(f"- An exception occurred :(\n{e}")
-    
-#     finally:
-#         # Close the SSH connection
-#         if ssh is not None:
-#             ssh.close()
-#             print("----------------------------\n- SSH connection closed.")
-#         # Close the database connection
-#         if db_connection:
-#             cursor.close()
-#             db_connection.close()
-#             print("- DB's connection closed.\n-----------------------------")
+                print(f"\n- Logs retrieved successfully from {ip}")
+
+        sftp.close()
+
+    except Exception as e:
+        print(f"- An exception occurred :(\n{e}")
+
+    finally:
+        # Close the SSH connection
+        if ssh is not None:
+            ssh.close()
+            print("----------------------------\n- SSH connection closed.")
+        # Close the database connection
+        if db_connection:
+            cursor.close()
+            db_connection.close()
+            print("- DB's connection closed.\n-----------------------------")
 ##############################################################################
 @app.route("/")
 def showLogs():
     db_connection = None
     cursor = None
 
+    insertLogs()
+
     try:
         # Connect to the database
         db_connection, cursor = DBConnection()
 
         # Execute the query
-        cursor.execute(f"SELECT * FROM {db_table_name};")
-        
+        cursor.execute(f"SELECT date_time, text, vm_name FROM {db_table_name};")
+
         # Fetch logs and pass them to the template directly
         logs = cursor.fetchall()
 
