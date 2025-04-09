@@ -150,16 +150,15 @@ def getLogs():
                             """).format(
                                 table=sql.Identifier(db_table_name))
                             cursor.execute(insert_query, (date_time, text, vm_name))
+                            print("\n- Logs inserted successfully.")
                         
                         else:
-                            print(f"- Duplicate log found, skipping.\n- Try again later.\n----------------------------")
                             continue
                     
                     except Exception as e:
                         print(f'- An exception occurred:(\n{e}')
 
                 print(f"\n- Logs retrieved successfully from {ip}")
-                print("\n- Logs inserted successfully.")
 
         sftp.close()
 
