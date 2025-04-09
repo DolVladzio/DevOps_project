@@ -152,7 +152,8 @@ def getLogs():
                             cursor.execute(insert_query, (date_time, text, vm_name))
                         
                         else:
-                            print(f"- Duplicate log found, skipping.\n- Try again later.")
+                            print(f"- Duplicate log found, skipping.\n- Try again later.\n----------------------------")
+                            continue
                     
                     except Exception as e:
                         print(f'- An exception occurred:(\n{e}')
