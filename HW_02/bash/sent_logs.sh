@@ -1,7 +1,7 @@
 #!/bin/bash
 ############################################################
 HOSTNAME=$(hostname)
-date_time=$(date +'%Y-%m-%d_%H-%M-%S')
+date_time=$(date +'%Y-%m-%d %H:%M:%S')
 file_name=logs_info.txt
 ############################################################
 if [[ $HOSTNAME == "vm-1" ]]; then
