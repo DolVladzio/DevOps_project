@@ -183,7 +183,8 @@ def showLogs():
     getLogs()
 
     try:
-        page = int(request.args.get("page", 1))  # Default to page 1
+        # Default to page 1
+        page = int(request.args.get("page", 1))
         per_page = 20
         offset = (page - 1) * per_page
 
@@ -209,14 +210,6 @@ def showLogs():
             total_pages=(total_logs + per_page - 1) // per_page,
             current_page=page,
         )
-
-        # Execute the query
-        # cursor.execute(f"SELECT date_time, text, vm_name FROM {db_table_name} ORDER BY date_time DESC;")
-
-        # Fetch logs and pass them to the template directly
-        # logs = cursor.fetchall()
-
-        # return render_template("logs.html", logs=logs)
 
     except Exception as e:
         return render_template("error.html", error_message=f"An error occurred: {e}")
