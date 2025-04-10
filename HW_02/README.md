@@ -34,7 +34,7 @@ A simple project to see how the specific logs can be collected from the vms, ins
 - HTML/CSS
 
 
-## First you need to setup all vms! 
+## To launch this, you need to do the next steps:
 
 - You have to clone this repository:
 ```sh
@@ -45,6 +45,7 @@ git clone https://github.com/DolVladzio/DevOps_project.git && cd DevOps_project
 ```sh
 mkdir ssh && cd ssh && ssh-keygen -t rsa -b 4096 -f id_rsa && cd ..
 ```
+> Note: `the ssh keys are needed to connect to the vms` .
 
 - Using the Vargant command, setup all vms:
 ```sh
@@ -55,12 +56,13 @@ vagrant up
 ```sh
 vagrant ssh main
 ```
+> Note: `we're connecting to the main vm to launch the Python's app` .
 
 - Start the docker containers
 ```sh
 cd DevOps_project/HW_02/app && docker-compose up -d
 ```
-> Note: `without -d` is gonna show logs in real time.
+> Note: `without -d` logs will be showed in real time.
 
 - After the containers have been launched, visit [localhost:5000] - to check the result!
 
