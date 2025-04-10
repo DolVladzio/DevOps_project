@@ -41,16 +41,6 @@ else
 	echo "- The file 'sent_logs.sh' wasn't found at /vagrant/bash/sent_logs.sh"
 fi
 ############################################################
-# Checking if the file exists
-if [[ -f /vagrant/python/app.py ]]; then
-	# Adding the file to the main path
-	cp -r /vagrant/python/ /home/sftpuser/python
-	chmod +x /home/sftpuser/python
-	chown -R sftpuser:sftpuser /home/sftpuser/python
-else
-	echo "- The dir 'python' wasn't found at /vagrant/python/"
-fi
-############################################################
 rkhunter --update
 rkhunter --propupd
 ############################################################
