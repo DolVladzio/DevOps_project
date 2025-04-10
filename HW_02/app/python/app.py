@@ -5,7 +5,7 @@ import re
 import psycopg2
 from psycopg2 import sql
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 ##############################################################################
@@ -121,7 +121,7 @@ def getLogs():
             # Read command output and error
             vm_name = stdout.read().decode('utf-8')
             hostname_error = stderr.read().decode('utf-8')
-
+            
             if hostname_error:
                 print(f"Command Error: {hostname_error}")
 
@@ -150,10 +150,10 @@ def getLogs():
                             """).format(
                                 table=sql.Identifier(db_table_name))
                             cursor.execute(insert_query, (date_time, text, vm_name))
-
+                        
                         else:
                             continue
-
+                    
                     except Exception as e:
                         print(f'- An exception occurred:(\n{e}')
 
@@ -183,25 +183,46 @@ def showLogs():
     getLogs()
 
     try:
+        page = int(request.args.get("page", 1))  # Default to page 1
+        per_page = 20
+        offset = (page - 1) * per_page
+
         # Connect to the database
         db_connection, cursor = DBConnection()
 
-        # Execute the query
-        cursor.execute(f"SELECT date_time, text, vm_name FROM {db_table_name} ORDER BY date_time DESC;")
-
-        # Fetch logs and pass them to the template directly
+        # Fetch the logs for the current page
+        cursor.execute(f"""
+            SELECT date_time, text, vm_name
+            FROM {db_table_name}
+            ORDER BY date_time DESC
+            LIMIT %s OFFSET %s;
+        """, (per_page, offset))
         logs = cursor.fetchall()
 
-        return render_template("logs.html", logs=logs)
+        # Fetch the total count for pagination
+        cursor.execute(f"SELECT COUNT(*) FROM {db_table_name};")
+        total_logs = cursor.fetchone()[0]
+
+        return render_template(
+            "logs.html",
+            logs=logs,
+            total_pages=(total_logs + per_page - 1) // per_page,
+            current_page=page,
+        )
+
+        # Execute the query
+        # cursor.execute(f"SELECT date_time, text, vm_name FROM {db_table_name} ORDER BY date_time DESC;")
+
+        # Fetch logs and pass them to the template directly
+        # logs = cursor.fetchall()
+
+        # return render_template("logs.html", logs=logs)
 
     except Exception as e:
         return render_template("error.html", error_message=f"An error occurred: {e}")
 
     finally:
-        if cursor:
-            cursor.close()
         # Close the database connection
         if db_connection:
-            cursor.close()
             db_connection.close()
 ##############################################################################
