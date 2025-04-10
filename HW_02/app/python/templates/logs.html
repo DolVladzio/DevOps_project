@@ -3,7 +3,7 @@
 <head>
     <title>Logs</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </head>
 <body>
     <h1>Logs</h1>
@@ -26,9 +26,15 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div style="text-align: center; margin-top: 20px;">
-            <button id="prev">Previous</button>
-            <button id="next">Next</button>
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            {% if current_page > 1 %}
+                <a href="/?page={{ current_page - 1 }}">Previous</a>
+            {% endif %}
+            Page {{ current_page }} of {{ total_pages }}
+            {% if current_page < total_pages %}
+                <a href="/?page={{ current_page + 1 }}">Next</a>
+            {% endif %}
         </div>
     {% else %}
         <p>No logs found in the database.</p>
