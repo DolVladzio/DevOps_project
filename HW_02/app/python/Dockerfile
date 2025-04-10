@@ -3,11 +3,7 @@ FROM python:3.13.3-alpine
 WORKDIR /app
 
 COPY . .
-COPY .ssh /root/.ssh
-
-RUN chmod 700 /root/.ssh &&  \
-	chmod 600 /root/.ssh/* && \
-	pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 5000
 
