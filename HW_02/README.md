@@ -1,6 +1,6 @@
 # Runbook
 
-A simple project to see how the specific logs can be collected from the vms, inserted into the DB(PostgreSQL) and outputted on a website
+_A simple project to see how the specific logs can be collected from the vms, inserted into the DB(PostgreSQL) and outputted on a website_
 
 ## The structure of the project
 ```sh
@@ -64,7 +64,7 @@ cd DevOps_project/HW_02/app && docker-compose up -d
 ```
 > Note: `without -d` logs will be showed in real time.
 
-- After the containers have been launched, visit [localhost:5000] - to check the result!
+_After the containers have been launched, visit [localhost:5000] - to check the result!_
 
 [//]: # (These are reference links)
 [localhost:5000]: <http://localhost:5000>
