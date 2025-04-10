@@ -22,7 +22,7 @@ services:
       - db
 ################################################
   db:
-    image: postgres:13.18-alpine3.20
+    image: postgres:12.0-alpine
     restart: always
     container_name: db
     env_file:
