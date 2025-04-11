@@ -1,0 +1,4 @@
+flask
+gunicorn
+paramiko
+psycopg2-binary
