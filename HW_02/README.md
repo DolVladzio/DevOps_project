@@ -15,7 +15,6 @@ _A simple project to see how the specific logs can be collected from the vms, in
 │       ├── init_db.py
 │       ├── requirements.txt
 │       ├── static
-│       │   ├── script.js
 │       │   └── style.css
 │       └── templates
 │           ├── error.html
