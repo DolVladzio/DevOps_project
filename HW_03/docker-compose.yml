@@ -13,27 +13,29 @@ services:
       - .env
     environment:
       DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
       DB_NAME: ${POSTGRES_DB}
       DB_USER: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWORD}
+      MONGODB_NAME: ${MONGODB_NAME}
+      MONGODB_CLUSTER: ${MONGODB_CLUSTER}
+      REDIS_HOST: ${REDIS_HOST}
     ports:
       - "8080:8080"
     depends_on:
       - db
 ################################################
-  # frontend:
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile-frontend
-  #   image: frontend
-  #   container_name: frontend
-  #   restart: always
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - db
-  #     - backend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: frontend
+    container_name: frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - backend
 ################################################
   db:
     image: postgres:12.0-alpine
@@ -45,4 +47,14 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+################################################
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: always
+################################################
+  mongodb:
+    image: karimtemple/mongo
+    container_name: mongodb
+    restart: always
 ################################################
