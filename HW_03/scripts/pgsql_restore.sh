@@ -9,7 +9,7 @@ PGPASSWORD=$DB_PASSWORD
 export PGPASSWORD
 
 #change the path to the file from which will be made restore
-backupPath=/backup/backup.dump
+backupPath=./backup/backup.dump
 #write your user
 dbUser=$DB_USER
 #write your database
@@ -20,7 +20,7 @@ host=$DB_HOST
 port=$DB_PORT
 
 # Check if the file exists
-if [[ ! -f $backupPath ]]: then
+if [[ ! -f $backupPath ]]; then
 	echo "- The file $backupPath wasn't found"
 	exit 1
 fi
