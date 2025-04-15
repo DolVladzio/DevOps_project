@@ -5,26 +5,29 @@
 #export PATH=$PATH:$pathA
 
 #write your password
-PGPASSWORD=root
+PGPASSWORD=$DB_PASSWORD
 export PGPASSWORD
 
 #change the path to the file from which will be made restore
-pathB=../backup/
-#write this on the command line as the first parameter
-filename=$1
+backupPath=/backup/backup.dump
 #write your user
-dbUser=postgres
+dbUser=$DB_USER
 #write your database
-database=schedule
+database=$DB_NAME
 #write your host
-host=localhost
+host=$DB_HOST
 #write your port
-port=5432
+port=$DB_PORT
+
+# Check if the file exists
+if [[ ! -f $backupPath ]]: then
+	echo "- The file $backupPath wasn't found"
+	exit 1
+fi
 
 psql -U $dbUser -h $host -p $port -d $database -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
-psql --set ON_ERROR_STOP=off -U $dbUser -h $host -p $port -d $database -1 -f $pathB$filename
+psql --set ON_ERROR_STOP=off -U $dbUser -h $host -p $port -d $database -1 -f $backupPath
 
 unset PGPASSWORD
 
-psql -U postgres -d schedule -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
-psql --set ON_ERROR_STOP=off -U postgres -d schedule -1 -f 2023-08-31.dump
+echo "- The DB restored successfully)"
