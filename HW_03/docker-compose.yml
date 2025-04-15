@@ -53,8 +53,3 @@ services:
     container_name: redis
     restart: always
 ################################################
-  mongodb:
-    image: karimtemple/mongo
-    container_name: mongodb
-    restart: always
-################################################
