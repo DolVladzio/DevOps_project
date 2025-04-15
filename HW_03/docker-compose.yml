@@ -8,6 +8,8 @@ services:
       dockerfile: Dockerfile
     container_name: backend
     restart: always
+    env_file:
+      - .env
     environment:
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
