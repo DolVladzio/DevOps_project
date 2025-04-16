@@ -21,7 +21,7 @@ In order to create a local copy of the project you need:
 2. Open a terminal and go to the directory where you want to clone the files. 
 3. Run the following command:
 
-       git clone https://github.com/DolVladzio/DevOps_project.git && cd DevOps_project/HW_03
+       git clone https://github.com/DolVladzio/DevOps_project.git && cd DevOps_project/HW_03/project
 
 ### Databases
 In order to configure your own credentials:
@@ -41,8 +41,8 @@ In order to change docker's images:
 2. Visit - [http://localhost]
 
 [//]: # (Reference links)
-[Credentials]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/.env>
-[Frontend's image]: <https://github.com/DolVladzio/DevOps_project/tree/SCRUM-18-HW_03/HW_03/frontend/Dockerfile>
-[Backend's image]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/Dockerfile>
-[All services]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/docker-compose.yml>
+[Credentials]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/.env>
+[Frontend's image]: <https://github.com/DolVladzio/DevOps_project/tree/SCRUM-18-HW_03/HW_03/frontend/project/Dockerfile>
+[Backend's image]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/Dockerfile>
+[All services]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/docker-compose.yml>
 [http://localhost]: <http://localhost>
