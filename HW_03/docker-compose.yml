@@ -26,6 +26,8 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
+    networks:
+      - my_network
 ################################################
   frontend:
     build:
@@ -39,6 +41,8 @@ services:
     depends_on:
       - postgres
       - backend
+    networks:
+      - my_network
 ################################################
   postgres:
     image: postgres:12.0-alpine
@@ -50,19 +54,23 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+    networks:
+      - my_network
 ################################################
   redis:
     image: redis:alpine
     container_name: redis
     restart: always
+    networks:
+      - my_network
 ################################################
   mongodb:
     # image: karimtemple/mongo
     image: mongo:noble
     container_name: mongodb
     restart: always
+    networks:
+      - my_network
 ################################################
-volumes:
-  pgdata:
+networks:
+  my_network:
