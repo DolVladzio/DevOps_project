@@ -41,8 +41,8 @@ In order to change docker's images:
 2. Visit - [http://localhost]
 
 [//]: # (Reference links)
-[Credentials]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/.env>
-[Frontend's image]: <https://github.com/DolVladzio/DevOps_project/tree/SCRUM-18-HW_03/HW_03/frontend/project/Dockerfile>
+[Credentials]: <https://github.com/DolVladzio/DevOps_project/tree/SCRUM-18-HW_03/HW_03/project/src/main/resources>
+[Frontend's image]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/frontend/Dockerfile>
 [Backend's image]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/Dockerfile>
 [All services]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/docker-compose.yml>
 [http://localhost]: <http://localhost>
