@@ -1,10 +1,8 @@
-# Class chedule
+# Class schedule
 ## General info
-This repository contains a source code of the Class Schedule Project.
+_This repository contains a source code of the Class Schedule Project._
 
-The main goal of the project is designing a website where the university or institute staff will be able to create, store and display their training schedules.
-
-Link to the development version of the site: https://develop-softserve.herokuapp.com/
+_The main goal of the project is designing a website where the university or institute staff will be able to create, store and display their training schedules._
 
 ## Creating a local repository
 In order to create a local copy of the project you need:
@@ -13,7 +11,6 @@ In order to create a local copy of the project you need:
 3. Run the following command. Git automatically creates a folder with the repository name and downloads the files there.
 
        git clone https://gitlab.com/class_schedule/class_schedule.backend.git
-4. Enter your username and password if GitLab requests.
 
 ## Database
 1. Download and install the last version of PostgreSQL https://www.postgresql.org/download/
