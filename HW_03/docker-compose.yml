@@ -20,8 +20,9 @@ services:
       # Redis env
       REDIS_HOST: ${REDIS_HOST}
       # MongoDB env
-      MONGODB_NAME: ${MONGODB_NAME}
-      MONGODB_CLUSTER: ${MONGODB_CLUSTER}
+      MONGODB_USER: admin
+      MONGODB_PASSWORD: secret
+      MONGODB_DB_NAME: schedules
     ports:
       - "8080:8080"
     depends_on:
@@ -61,7 +62,4 @@ services:
     image: mongo:noble
     container_name: mongodb
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: secret
 ################################################
