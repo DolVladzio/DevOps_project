@@ -50,6 +50,8 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 ################################################
   redis:
     image: redis:alpine
@@ -62,3 +64,5 @@ services:
     container_name: mongodb
     restart: always
 ################################################
+volumes:
+  pgdata:
