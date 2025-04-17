@@ -45,7 +45,9 @@ services:
       - my_network
 ################################################
   postgres:
-    image: postgres:12.0-alpine
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
     container_name: postgres
     restart: always
     env_file:
@@ -74,3 +76,4 @@ services:
 ################################################
 networks:
   my_network:
+################################################
