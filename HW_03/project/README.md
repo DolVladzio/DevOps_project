@@ -22,9 +22,8 @@ _The main goal of the project is designing a website where the university or ins
 
 ### Creating a local repository
 In order to create a local copy of the project you need:
-1. Download and install the last version of Git https://git-scm.com/downloads
-2. Open a terminal and go to the directory where you want to clone the files. 
-3. Run the following command:
+1. Open a terminal and go to the directory where you want to clone the files. 
+2. Run the following command:
 
        git clone https://github.com/DolVladzio/DevOps_project.git && cd DevOps_project/HW_03/project
 
