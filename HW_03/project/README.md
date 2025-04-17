@@ -15,6 +15,11 @@ _The main goal of the project is designing a website where the university or ins
   - MongoDB
 - Docker/Docker-compose
 
+## Requirements
+- [Git]
+- [Docker/Docker-Compose]
+- Linux
+
 ### Creating a local repository
 In order to create a local copy of the project you need:
 1. Download and install the last version of Git https://git-scm.com/downloads
@@ -25,7 +30,8 @@ In order to create a local copy of the project you need:
 
 ### Databases
 In order to configure your own credentials:
-- You can do it here: [Credentials]
+1. Rename this file from [.env_example] to .env
+2. Change whatever you want)
 
 ### Images
 In order to change docker's images:
@@ -41,8 +47,10 @@ In order to change docker's images:
 2. Visit - [http://localhost]
 
 [//]: # (Reference links)
-[Credentials]: <https://github.com/DolVladzio/DevOps_project/tree/SCRUM-18-HW_03/HW_03/project/src/main/resources>
+[.env_example]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/.env>
 [Frontend's image]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/frontend/Dockerfile>
 [Backend's image]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/Dockerfile>
 [All services]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/docker-compose.yml>
 [http://localhost]: <http://localhost>
+[Git]: <https://git-scm.com/downloads/linux>
+[Docker/Docker-Compose]: <https://docs.docker.com/engine/install/>
