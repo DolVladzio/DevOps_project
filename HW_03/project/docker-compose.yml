@@ -48,6 +48,7 @@ services:
     build:
       context: ./postgres
       dockerfile: Dockerfile
+    image: postgres
     container_name: postgres
     restart: always
     env_file:
@@ -62,14 +63,6 @@ services:
   redis:
     image: redis:alpine
     container_name: redis
-    restart: always
-    networks:
-      - my_network
-################################################
-  mongodb:
-    # image: karimtemple/mongo
-    image: mongo:noble
-    container_name: mongodb
     restart: always
     networks:
       - my_network
