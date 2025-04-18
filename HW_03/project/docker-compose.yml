@@ -19,9 +19,6 @@ services:
       DB_PASSWORD: ${POSTGRES_PASSWORD}
       # Redis env
       REDIS_HOST: ${REDIS_HOST}
-      # MongoDB env
-      MONGODB_CLUSTER: ${MONGODB_CLUSTER}
-      MONGODB_DB_NAME: ${MONGODB_DB_NAME}
     ports:
       - "8080:8080"
     depends_on:
