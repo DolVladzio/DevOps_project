@@ -2,9 +2,9 @@ name: CI_Testing_Frontend-Backend
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "SCRUM-18-HW_03" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "SCRUM-18-HW_03" ]
 
 jobs:
 
