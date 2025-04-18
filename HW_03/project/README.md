@@ -12,7 +12,6 @@ _The main goal of the project is designing a website where the university or ins
 - DBs
   - PostgreSQL
   - Redis
-  - MongoDB
 - Docker/Docker-compose
 
 ## Requirements
