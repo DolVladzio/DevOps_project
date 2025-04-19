@@ -9,9 +9,12 @@ metadata:
 data:
   ### BACKEND ENV ###
   DB_HOST: postgres
-  # PostgreSQL
+  DB_NAME: database
+  DB_USER: db_user
+  DB_PASSWORD: db_password
+  # PostgreSQL env
   POSTGRES_USER: db_user
   POSTGRES_PASSWORD: db_password
   POSTGRES_DB: database
-  # Redis
+  # Redis env
   REDIS_HOST: redis
