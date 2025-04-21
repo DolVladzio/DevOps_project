@@ -8,6 +8,9 @@ metadata:
 # ----------------------------
 data:
   ### BACKEND ENV ###
+  DB_NAME: database
+  DB_PASSWORD: db_password
+  DB_USER: db_user
   DB_HOST: postgres
   # PostgreSQL env
   POSTGRES_USER: db_user
