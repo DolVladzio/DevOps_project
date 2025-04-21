@@ -28,8 +28,7 @@ In order to create a local copy of the project you need:
 
 ### Databases
 In order to configure your own credentials:
-1. Rename this file from [.env_example] to .env
-2. Change whatever you want)
+- You can do it here: [.env]
 
 ### Images
 In order to change docker's images:
@@ -41,12 +40,14 @@ In order to change docker's images:
 ### Launch
 1. In order to launch everything:
 
-       docker-compose up -d
+       docker-compose up -d && docker ps
 > without -d, logs will be showed in real-time
+
+> docker ps, will show all launched services
 2. Visit - [http://localhost]
 
 [//]: # (Reference links)
-[.env_example]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/.env>
+[.env]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/.env>
 [Frontend's image]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/frontend/Dockerfile>
 [Backend's image]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/Dockerfile>
 [Postgres]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/postgres/Dockerfile>
