@@ -12,7 +12,7 @@ _The main goal of the project is designing a website where the university or ins
 - DBs
   - PostgreSQL
   - Redis
-- Docker/Docker-compose(already created docker images and pushed to the DockerHub)
+- Docker(docker images already pushed to the DockerHub)
 - K8s
 
 ## Requirements
@@ -38,6 +38,11 @@ In order to change docker's images:
 
         bash launch_k8s.sh
 > it'll setup all infrastructure
+
+2. To see the result
+
+        kubectl port-forward --address 0.0.0.0 svc/frontend 3000:80 & \
+        kubectl port-forward --address 0.0.0.0 svc/backend 8080:8080
 
 [//]: # (Reference links)
 [Git]: <https://git-scm.com/downloads/linux>
