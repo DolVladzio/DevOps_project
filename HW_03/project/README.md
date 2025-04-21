@@ -23,8 +23,9 @@ _The main goal of the project is designing a website where the university or ins
 In order to create a local copy of the project you need:
 1. Open a terminal and go to the directory where you want to clone the files. 
 2. Run the following command:
-
-       git clone https://github.com/DolVladzio/DevOps_project.git && cd DevOps_project/HW_03/project
+```bash
+git clone https://github.com/DolVladzio/DevOps_project.git && cd DevOps_project/HW_03/project
+```
 
 ### Databases
 In order to configure your own credentials:
@@ -39,8 +40,9 @@ In order to change docker's images:
 
 ### Launch
 1. In order to launch everything:
-
-       docker-compose up -d && docker ps
+```bash
+docker-compose up -d && docker ps
+```
 > without -d, logs will be showed in real-time
 
 > docker ps, will show all launched services

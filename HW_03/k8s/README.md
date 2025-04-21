@@ -30,9 +30,9 @@ _The main goal of the project is designing a website where the university or ins
 In order to create a local copy of the project you need:
 1. Open a terminal and go to the directory where you want to clone the files. 
 2. Run the following command:
-
-       git clone https://github.com/DolVladzio/DevOps_project.git && cd DevOps_project/HW_03/k8s
-
+```bash
+git clone https://github.com/DolVladzio/DevOps_project.git && cd DevOps_project/HW_03/k8s
+```
 ---
 
 ### Images
@@ -50,15 +50,16 @@ In order to change env
 
 ### Launch
 1. In order to launch everything:
-
-        bash launch_k8s.sh
+```bash
+bash launch_k8s.sh
+```
 > it'll setup all infrastructure
 
 2. To see the result
-
-        kubectl port-forward --address 0.0.0.0 svc/frontend 3000:80 & \
-        kubectl port-forward --address 0.0.0.0 svc/backend 8080:8080
-
+```bash
+kubectl port-forward --address 0.0.0.0 svc/frontend 3000:80 & \
+kubectl port-forward --address 0.0.0.0 svc/backend 8080:8080
+```
 [//]: # (Reference links)
 [Git]: <https://git-scm.com/downloads/linux>
 [Docker/Docker-Compose]: <https://docs.docker.com/engine/install/>
