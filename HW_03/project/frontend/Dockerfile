@@ -1,5 +1,5 @@
 ### Stage: 1 ###
-FROM node:current-alpine3.21 AS build
+FROM node:18-alpine3.21 AS build
 
 WORKDIR /app
 

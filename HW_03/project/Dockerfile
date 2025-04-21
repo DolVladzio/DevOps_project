@@ -1,5 +1,5 @@
 ### Build Stage ###
-FROM gradle:7-jdk11 AS build
+FROM gradle:7.5.1-jdk11 AS build
 
 WORKDIR /app
 
@@ -7,10 +7,9 @@ COPY system.properties build.gradle settings.gradle pre-commit.gradle liquibase.
 COPY src/ src/
 COPY config/ config/
 
-RUN gradle clean war
-
+RUN gradle clean --refresh-dependencies war
 ### Production Stage ###
-FROM tomcat:9.0.93-jdk11 AS prod
+FROM tomcat:9.0.79-jdk11 AS prod
 
 COPY --from=build /app/build/libs/*.war /usr/local/tomcat/webapps/ROOT.war
 
