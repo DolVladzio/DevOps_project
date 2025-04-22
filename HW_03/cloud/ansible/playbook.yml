@@ -1,4 +1,5 @@
-- name: Install Docker and start app
+###############################################
+- name: Install Docker/Docker-compose and start app
   hosts: servers
   become: true
   tasks:
@@ -6,3 +7,14 @@
       apt:
         name: docker
         state: present
+###############################################
+    - name: Install Docker-compose
+      apt:
+        name: docker-compose
+        state: present
+###############################################
+    - name: Setup all infrastructure
+      command: docker-compose up -d
+      args:
+        chdir: /home/vagrant/DevOps_project/HW_03/project/
+###############################################
