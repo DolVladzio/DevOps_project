@@ -1,0 +1,8 @@
+- name: Install Docker and start app
+  hosts: servers
+  become: true
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker
+        state: present
