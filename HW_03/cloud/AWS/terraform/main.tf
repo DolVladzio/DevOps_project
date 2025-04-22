@@ -15,13 +15,14 @@ resource "aws_vpc" "HW_03_vpc" {
 	vpc_id            = aws_vpc.HW_03_vpc.id
 	cidr_block        = "10.0.1.0/24"
 	availability_zone = "eu-west-1a"
+	map_public_ip_on_launch = true
 
 	tags = {
 		Name = "${var.DEV}-subnet"
 	}
 }
 #########################################################################
-resource "aws_security_group" "HW_03_secutiry_group" {
+resource "aws_security_group" "HW_03_security_group" {
 	name        = "example-sg"
 	description = "Allow SSH and HTTP"
 	vpc_id      = aws_vpc.HW_03_vpc.id
@@ -56,9 +57,9 @@ resource "aws_key_pair" "HW_03_key_pair" {
 resource "aws_instance" "HW_03_instance" {
 	ami           = var.AMI_ID
 	instance_type = var.INSTANCE_TYPE
-	key_name	  = aws_key_pair.HW_03_key_pair.id
+	key_name	  = aws_key_pair.HW_03_key_pair.key_name
 	subnet_id     = aws_subnet.HW_03_subnet.id
-	security_groups = [aws_security_group.HW_03_secutiry_group.id]
+	security_groups = [aws_security_group.HW_03_security_group.id]
 
 	tags = {
 		Name = "${var.DEV}-instance"
