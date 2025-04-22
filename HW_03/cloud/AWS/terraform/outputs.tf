@@ -5,10 +5,6 @@ output "AWS_REGION" {
 	value = var.AWS_REGION
 }
 #-----------------------------------------------------
-# output "INSTANCE_NAME" {
-# 	value = var.INSTANCE_NAME
-# }
-#-----------------------------------------------------
 output "INSTANCE_TYPE" {
 	value = var.INSTANCE_TYPE
 }
