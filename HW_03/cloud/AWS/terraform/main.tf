@@ -58,7 +58,7 @@ resource "aws_instance" "HW_03_instance" {
 	instance_type = var.INSTANCE_TYPE
 	key_name	  = aws_key_pair.HW_03_key_pair.id
 	subnet_id     = aws_subnet.HW_03_subnet.id
-	security_groups = [aws_security_group.example.id]
+	security_groups = [aws_security_group.HW_03_secutiry_group.id]
 
 	tags = {
 		Name = "${var.DEV}-instance"

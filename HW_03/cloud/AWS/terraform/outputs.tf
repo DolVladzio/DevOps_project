@@ -14,6 +14,6 @@ output "AMI_ID" {
 }
 #-----------------------------------------------------
 output "INSTANCE_PUBLIC_IP" {
-	value = aws_instance.example.public_ip
+	value = aws_instance.HW_03_instance.public_ip
 }
 #-----------------------------------------------------
