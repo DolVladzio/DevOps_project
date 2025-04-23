@@ -13,7 +13,7 @@ variable "DEV" {
 #----------------------------------------------------
 variable "KEY_PAIR_NAME" {
 	description = "SSH key's name"
-	default     = "aws_instance"
+	default     = "terraform-key"
 }
 #----------------------------------------------------
 variable "AMI_ID" {
