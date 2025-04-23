@@ -1,5 +1,5 @@
 #########################################################################
-# Resources 
+# Resources
 #########################################################################
 resource "aws_vpc" "HW_03_vpc" {
 	cidr_block           = "10.0.0.0/16"
@@ -18,7 +18,7 @@ resource "aws_vpc" "HW_03_vpc" {
 	map_public_ip_on_launch = true
 
 	tags = {
-		Name = "${var.DEV}-subnet"
+			Name = "${var.DEV}-subnet"
 	}
 }
 #########################################################################
@@ -49,20 +49,23 @@ resource "aws_security_group" "HW_03_security_group" {
 	}
 }
 #########################################################################
-resource "aws_key_pair" "HW_03_key_pair" {
-	key_name   = var.KEY_PAIR_NAME
-	public_key = file("~/.ssh/${var.KEY_PAIR_NAME}.pub")
-}
-#########################################################################
 resource "aws_instance" "HW_03_instance" {
 	ami           = var.AMI_ID
 	instance_type = var.INSTANCE_TYPE
-	key_name      = aws_key_pair.HW_03_key_pair.id
 	subnet_id     = aws_subnet.HW_03_subnet.id
 	security_groups = [aws_security_group.HW_03_security_group.id]
 
+	user_data = <<-EOF
+		#!/bin/bash
+		mkdir -p /home/ubuntu/.ssh
+		echo "${file("~/.ssh/terraform-key.pub")}" > /home/ubuntu/.ssh/authorized_keys
+		chmod 600 /home/ubuntu/.ssh/authorized_keys
+		chown ubuntu:ubuntu /home/ubuntu/.ssh/authorized_keys
+		echo "- The public ssh key was copied successfully"
+	EOF
+
 	tags = {
-		Name = "${var.DEV}-instance"
+			Name = "${var.DEV}-instance"
 	}
 }
 #########################################################################
