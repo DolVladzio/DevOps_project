@@ -11,7 +11,7 @@ _The main goal of this task is undesrstand how it's easy to configure different 
 ## Requirements
 - [Git]
 - Linux
-- [Ansible]
+- [Ansible](on your vm and on the other vms with you're going to configure)
 
 ### Creating a local repository
 In order to create a local copy of the project you need:
