@@ -22,11 +22,17 @@ git clone https://github.com/DolVladzio/DevOps_project.git && cd DevOps_project/
 ```
 
 ### Create SSH keys
-> You should have the same ssh keys on your local vm and on the vm(-s) which you're gonna configure
-
+```bash
+ssh-keygen -t rsa -b 4096 -f id_rsa && mv id_rsa ~/.ssh/id_rsa && mv id_rsa.pub ~/.ssh/authorized_keys
+```
+> 
 ### IPs
 In order to configure vm's ip:
 - You can do it here: [inventory.ini]
+
+### Playbook
+In order to configure what you wanna do with your vm(-s):
+- You can do it here: [playbook.yml]
 
 ### Launch
 1. In order to launch:
@@ -39,3 +45,4 @@ ansible-playbook -i inventory.ini playbook.yml
 [Docker/Docker-Compose]: <https://docs.docker.com/engine/install/>
 [Ansible]: <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html>
 [inventory.ini]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/cloud/ansible/inventory.ini>
+[playbook.yml]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/cloud/ansible/playbook.yml>
