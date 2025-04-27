@@ -24,9 +24,5 @@ spec:
         image: redis:alpine
         ports:
         - containerPort: 6379
-        # ----------------------------
-        envFrom:
-        - configMapRef:
-            name: app-config
       # ----------------------------
       restartPolicy: Always

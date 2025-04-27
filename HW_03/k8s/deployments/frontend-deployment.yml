@@ -24,9 +24,5 @@ spec:
         image: dolvladzio/frontend
         ports:
         - containerPort: 80
-        # ----------------------------
-        envFrom:
-        - configMapRef:
-            name: app-config
       # ----------------------------
       restartPolicy: Always
