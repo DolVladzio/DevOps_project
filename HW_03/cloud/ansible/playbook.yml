@@ -1,20 +1,48 @@
-###############################################
-- name: Install Docker/Docker-compose and start app
+- name: Install Docker/Docker Compose and start app
   hosts: servers
   become: true
   tasks:
-    - name: Install Docker
+###############################################
+    - name: Update apt cache
       apt:
-        name: docker
+        update_cache: yes
+###############################################
+    - name: Install prerequisites
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
         state: present
 ###############################################
-    - name: Install Docker-compose
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+###############################################
+    - name: Add Docker repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+###############################################
+    - name: Update apt cache after adding Docker repository
+      apt:
+        update_cache: yes
+###############################################
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+###############################################
+    - name: Install Docker Compose
       apt:
         name: docker-compose
         state: present
 ###############################################
-    - name: Setup all infrastructure
-      command: docker-compose up -d
-      args:
-        chdir: /home/vagrant/DevOps_project/HW_03/project/
+    - name: Start and enable Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
 ###############################################
