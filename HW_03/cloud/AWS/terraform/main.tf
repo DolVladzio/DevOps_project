@@ -7,7 +7,7 @@ resource "aws_vpc" "HW_03_vpc" {
 	enable_dns_hostnames = true
 
 	tags = {
-			Name = "${var.DEV}_vpc"
+		Name = "${var.DEV}_vpc"
 	}
 	}
 
@@ -28,24 +28,31 @@ resource "aws_security_group" "HW_03_security_group" {
 	vpc_id      = aws_vpc.HW_03_vpc.id
 
 	ingress {
-			from_port   = 22
-			to_port     = 22
-			protocol    = "tcp"
-			cidr_blocks = ["176.117.188.172/32"]
+		from_port   = 22
+		to_port     = 22
+		protocol    = "tcp"
+		cidr_blocks = ["0.0.0.0/0"]
 	}
 
 	ingress {
-			from_port   = 80
-			to_port     = 80
-			protocol    = "tcp"
-			cidr_blocks = ["0.0.0.0/0"]
+		from_port   = 80
+		to_port     = 80
+		protocol    = "tcp"
+		cidr_blocks = ["0.0.0.0/0"]
 	}
 
+	ingress {
+                from_port   = 8080
+                to_port     = 8080
+                protocol    = "tcp"
+                cidr_blocks = ["0.0.0.0/0"]
+        }
+
 	egress {
-			from_port   = 0
-			to_port     = 0
-			protocol    = "-1"
-			cidr_blocks = ["0.0.0.0/0"]
+		from_port   = 0
+		to_port     = 0
+		protocol    = "-1"
+		cidr_blocks = ["0.0.0.0/0"]
 	}
 }
 #########################################################################
@@ -56,6 +63,10 @@ resource "aws_key_pair" "HW_03_key_pair" {
 #########################################################################
 resource "aws_internet_gateway" "HW_03_igw" {
 	vpc_id = aws_vpc.HW_03_vpc.id
+
+	tags = {
+                Name = "${var.DEV}_internet_gateway"
+        }
 }
 #########################################################################
 resource "aws_route_table" "HW_03_route_table" {
@@ -65,6 +76,10 @@ resource "aws_route_table" "HW_03_route_table" {
 		cidr_block = "0.0.0.0/0"
 		gateway_id = aws_internet_gateway.HW_03_igw.id
 	}
+
+	tags = {
+                Name = "${var.DEV}_route_table"
+        }
 }
 #########################################################################
 resource "aws_route_table_association" "HW_03_route_table_association" {

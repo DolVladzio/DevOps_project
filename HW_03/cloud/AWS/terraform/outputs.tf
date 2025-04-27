@@ -13,3 +13,7 @@ output "AMI_ID" {
 	value = var.AMI_ID
 }
 #-----------------------------------------------------
+output "INSTANCE_PUBLIC_IP" {
+	value = aws_instance.HW_03_instance.public_ip
+}
+#-----------------------------------------------------
