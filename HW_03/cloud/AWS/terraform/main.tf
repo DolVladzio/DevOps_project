@@ -18,7 +18,7 @@ resource "aws_vpc" "HW_03_vpc" {
 	map_public_ip_on_launch = true
 
 	tags = {
-					Name = "${var.DEV}_subnet"
+		Name = "${var.DEV}_subnet"
 	}
 }
 #########################################################################
@@ -54,15 +54,34 @@ resource "aws_key_pair" "HW_03_key_pair" {
 	public_key = file("~/.ssh/terraform-aws.pem.pub")
 }
 #########################################################################
+resource "aws_internet_gateway" "HW_03_igw" {
+	vpc_id = aws_vpc.HW_03_vpc.id
+}
+#########################################################################
+resource "aws_route_table" "HW_03_route_table" {
+	vpc_id = aws_vpc.HW_03_vpc.id
+
+	route {
+		cidr_block = "0.0.0.0/0"
+		gateway_id = aws_internet_gateway.HW_03_igw.id
+	}
+}
+#########################################################################
+resource "aws_route_table_association" "HW_03_route_table_association" {
+	subnet_id      = aws_subnet.HW_03_subnet.id
+	route_table_id = aws_route_table.HW_03_route_table.id
+}
+#########################################################################
 resource "aws_instance" "HW_03_instance" {
 	ami           = var.AMI_ID
 	instance_type = var.INSTANCE_TYPE
 	subnet_id     = aws_subnet.HW_03_subnet.id
 	key_name      = aws_key_pair.HW_03_key_pair.key_name
 	security_groups = [aws_security_group.HW_03_security_group.id]
+	associate_public_ip_address = true
 
 	tags = {
-			Name = "${var.DEV}_instance"
+		Name = "${var.DEV}_instance"
 	}
 }
 #########################################################################
