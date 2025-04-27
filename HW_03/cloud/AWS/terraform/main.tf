@@ -7,7 +7,7 @@ resource "aws_vpc" "HW_03_vpc" {
 	enable_dns_hostnames = true
 
 	tags = {
-		Name = "${var.DEV}-vpc"
+			Name = "${var.DEV}_vpc"
 	}
 	}
 
@@ -18,7 +18,7 @@ resource "aws_vpc" "HW_03_vpc" {
 	map_public_ip_on_launch = true
 
 	tags = {
-			Name = "${var.DEV}-subnet"
+					Name = "${var.DEV}_subnet"
 	}
 }
 #########################################################################
@@ -28,44 +28,41 @@ resource "aws_security_group" "HW_03_security_group" {
 	vpc_id      = aws_vpc.HW_03_vpc.id
 
 	ingress {
-		from_port   = 22
-		to_port     = 22
-		protocol    = "tcp"
-		cidr_blocks = ["0.0.0.0/0"]
+			from_port   = 22
+			to_port     = 22
+			protocol    = "tcp"
+			cidr_blocks = ["176.117.188.172/32"]
 	}
 
 	ingress {
-		from_port   = 80
-		to_port     = 80
-		protocol    = "tcp"
-		cidr_blocks = ["0.0.0.0/0"]
+			from_port   = 80
+			to_port     = 80
+			protocol    = "tcp"
+			cidr_blocks = ["0.0.0.0/0"]
 	}
 
 	egress {
-		from_port   = 0
-		to_port     = 0
-		protocol    = "-1"
-		cidr_blocks = ["0.0.0.0/0"]
+			from_port   = 0
+			to_port     = 0
+			protocol    = "-1"
+			cidr_blocks = ["0.0.0.0/0"]
 	}
+}
+#########################################################################
+resource "aws_key_pair" "HW_03_key_pair" {
+	key_name   = var.SSH_KEY_NAME
+	public_key = file("~/.ssh/terraform-aws.pem.pub")
 }
 #########################################################################
 resource "aws_instance" "HW_03_instance" {
 	ami           = var.AMI_ID
 	instance_type = var.INSTANCE_TYPE
 	subnet_id     = aws_subnet.HW_03_subnet.id
+	key_name      = aws_key_pair.HW_03_key_pair.key_name
 	security_groups = [aws_security_group.HW_03_security_group.id]
 
-	user_data = <<-EOF
-		#!/bin/bash
-		mkdir -p /home/ubuntu/.ssh
-		echo "${file("~/.ssh/terraform-key.pub")}" > /home/ubuntu/.ssh/authorized_keys
-		chmod 600 /home/ubuntu/.ssh/authorized_keys
-		chown ubuntu:ubuntu /home/ubuntu/.ssh/authorized_keys
-		echo "- The public ssh key was copied successfully"
-	EOF
-
 	tags = {
-			Name = "${var.DEV}-instance"
+			Name = "${var.DEV}_instance"
 	}
 }
 #########################################################################

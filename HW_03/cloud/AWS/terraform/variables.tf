@@ -8,12 +8,12 @@ variable "AWS_REGION" {
 #----------------------------------------------------
 variable "DEV" {
 	description = "AWS instance's name"
-	default     = "HW_03_instance"
+	default     = "HW_03"
 }
 #----------------------------------------------------
-variable "KEY_PAIR_NAME" {
+variable "SSH_KEY_NAME" {
 	description = "SSH key's name"
-	default     = "terraform-key"
+	default     = "terraform-aws"
 }
 #----------------------------------------------------
 variable "AMI_ID" {
