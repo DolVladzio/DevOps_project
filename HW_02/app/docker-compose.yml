@@ -6,6 +6,7 @@ services:
     build:
       context: ./python
       dockerfile: Dockerfile
+    image: app
     container_name: app
     restart: always
     ports:
