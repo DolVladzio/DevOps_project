@@ -10,6 +10,5 @@ RUN gradle clean --refresh-dependencies war
 FROM tomcat:9.0.79-jdk11 AS prod
 
 COPY --from=build /app/build/libs/*.war /usr/local/tomcat/webapps/ROOT.war
-COPY scripts/ /scripts/
 
 CMD ["catalina.sh", "run"]
