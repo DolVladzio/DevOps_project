@@ -46,3 +46,20 @@
         state: started
         enabled: yes
 ###############################################
+    - name: Ensure the 'docker' group exists
+      group:
+        name: docker
+        state: present
+###############################################
+    - name: Add the user to the 'docker' group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+###############################################
+    - name: Set correct permissions on Docker socket
+      file:
+        path: /var/run/docker.sock
+        mode: '0660'
+        group: docker
+###############################################
