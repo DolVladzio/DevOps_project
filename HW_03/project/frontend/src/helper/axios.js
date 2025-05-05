@@ -1,16 +1,20 @@
 import axios from 'axios';
 import { TOKEN_BEGIN } from '../constants/tokenBegin';
 
-let REACT_APP_API_BASE_URL = 'http://localhost:8080/';
-if (process.env.REACT_APP_API_BASE_URL !== undefined) {
-    REACT_APP_API_BASE_URL = process.env.REACT_APP_API_BASE_URL.trim();
-}
+// Utility function to get the API base URL
+const getApiBaseUrl = () => {
+    const envBaseUrl = process.env.REACT_APP_API_BASE_URL?.trim();
+    return envBaseUrl || 'http://localhost:8080/';
+};
+
+// Create Axios instance with the base URL
 const instance = axios.create({
-    baseURL: REACT_APP_API_BASE_URL,
+    baseURL: getApiBaseUrl(),
 });
 
+// Attach authorization token if available
 const token = localStorage.getItem('token');
-if (token && token.includes(TOKEN_BEGIN)) {
+if (token?.includes(TOKEN_BEGIN)) {
     instance.defaults.headers.common.Authorization = token;
 }
 
