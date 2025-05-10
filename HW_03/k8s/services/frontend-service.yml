@@ -1,0 +1,19 @@
+# == Service ===========================================
+apiVersion: v1
+kind: Service
+# ----------------------------
+metadata:
+  name: frontend
+  labels:
+    app: frontend
+# ----------------------------
+spec:
+  selector:
+    app: frontend
+  type: ClusterIP
+  # ----------------------------
+  ports:
+  - name: frontend
+    port: 80
+    targetPort: 80
+  # ----------------------------

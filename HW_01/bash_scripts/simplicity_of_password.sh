@@ -11,6 +11,8 @@ passInfo() {
         echo "- $1 passwords statistics"
 	echo ""
 }
+# Install cracklib-runtime tool ####################################
+sudo apt install cracklib-runtime -y
 # ADMIN PASSWORDS ##################################################
 lineFunc
 # Getting pass and delete everything useless

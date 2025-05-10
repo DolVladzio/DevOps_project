@@ -1,0 +1,20 @@
+# == ConfigMap ===================================
+apiVersion: v1
+kind: ConfigMap
+# ----------------------------
+metadata:
+  name: app-config
+  namespace: default
+# ----------------------------
+data:
+  ### BACKEND ENV ###
+  DB_NAME: database
+  DB_PASSWORD: db_password
+  DB_USER: db_user
+  DB_HOST: postgres
+  # PostgreSQL env
+  POSTGRES_USER: db_user
+  POSTGRES_PASSWORD: db_password
+  POSTGRES_DB: database
+  # Redis env
+  REDIS_HOST: redis
