@@ -7,7 +7,8 @@ COPY . .
 
 RUN gradle clean --refresh-dependencies war
 # Stage 2: Runtime
-FROM tomcat:9.0.79-jdk11 AS prod
+#FROM tomcat:9.0.104-jre11-temurin
+FROM tomcat:9.0.104-jre11-temurin-jammy
 
 COPY --from=build /app/build/libs/*.war /usr/local/tomcat/webapps/ROOT.war
 
