@@ -26,6 +26,17 @@ services:
     networks:
       - new_network
 ################################################
+  proxy_pass:
+    build:
+      context: ./proxy_pass
+    image: proxy_pass
+    container_name: proxy_pass
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+      - new_network
+################################################
   frontend:
     build:
       context: ./frontend
@@ -37,7 +48,7 @@ services:
     environment:
       REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
     ports:
-      - "80:80"
+      - "3000:3000"
     depends_on:
       - postgres
       - backend
