@@ -15,11 +15,9 @@ FROM nginx:stable-alpine3.20-slim AS prod
 
 WORKDIR /app
 
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf.template
-COPY ./entrypoint.sh /entrypoint.sh
+COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/build/ /usr/share/nginx/html
 
 EXPOSE 3000
 
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]
