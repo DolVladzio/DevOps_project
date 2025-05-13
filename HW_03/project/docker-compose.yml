@@ -3,7 +3,10 @@ version: '3.8'
 services:
 ################################################
   backend:
-    image: dolvladzio/backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: backend
     container_name: backend
     restart: always
     env_file:
@@ -23,14 +26,29 @@ services:
     networks:
       - new_network
 ################################################
+  proxy_pass:
+    build:
+      context: ./proxy_pass
+    image: proxy_pass
+    container_name: proxy_pass
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+      - new_network
+################################################
   frontend:
     build:
       context: ./frontend
     image: frontend
     container_name: frontend
     restart: always
-    ports:
-      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
+#    ports:
+#      - "3000:3000"
     depends_on:
       - postgres
       - backend
