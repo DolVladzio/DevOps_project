@@ -1,11 +1,10 @@
 import axios from 'axios';
 import { TOKEN_BEGIN } from '../constants/tokenBegin';
 
-// Utility function to get the API base URL
-const getApiBaseUrl = () => {
-    const envBaseUrl = process.env.REACT_APP_API_BASE_URL?.trim();
-    return envBaseUrl;
-};
+let REACT_APP_API_BASE_URL = '/api';
+if (process.env.REACT_APP_API_BASE_URL !== undefined) {
+    REACT_APP_API_BASE_URL = process.env.REACT_APP_API_BASE_URL.trim();
+}
 
 // Create Axios instance with the base URL
 const instance = axios.create({
