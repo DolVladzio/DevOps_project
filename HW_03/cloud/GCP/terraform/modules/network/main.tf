@@ -37,7 +37,7 @@ resource "google_compute_subnetwork" "subnet" {
 	network       = google_compute_network.vpc[each.value.network_name].id
 }
 #########################################################################
-resource "google_compute_firewall" "default" {
+resource "google_compute_firewall" "ingress" {
 	for_each = {
 		for sg in var.security_groups : sg.name => sg
 		if length(sg.ingress) > 0
