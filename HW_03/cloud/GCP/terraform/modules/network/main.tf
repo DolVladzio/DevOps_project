@@ -99,8 +99,19 @@ resource "google_compute_firewall" "egress" {
 #########################################################################
 resource "google_compute_router" "nat_router" {
 	for_each = google_compute_network.vpc
-	name    = "${each.value}-nat-router"
+	name    = "${each.key}-nat-router"
 	network = each.value.self_link
 	region  = var.region
+}
+#########################################################################
+resource "google_compute_router_nat" "cloud_nat" {
+	for_each = google_compute_router.nat_router
+
+	name                       = "${each.key}-nat"
+	router                     = each.value.name
+	region                     = var.region
+
+	nat_ip_allocate_option     = "AUTO_ONLY"
+	source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
 }
 #########################################################################
