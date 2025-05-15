@@ -18,3 +18,22 @@ resource "google_compute_network" "vpc" {
 	auto_create_subnetworks = false
 }
 #########################################################################
+resource "google_compute_subnetwork" "subnet" {
+	for_each      = {
+		for subnet in flatten([
+			for network in var.network : [
+				for subnet in network.subnets : {
+					key = "${network.name}-${subnet.name}"
+					network_name = network.name
+					subnet_data = subnet
+				}
+			]
+		]) : subnet.key => subnet
+	}
+
+	name          = each.value.subnet_data.name
+	ip_cidr_range = each.value.subnet_data.cidr
+	region        = var.region
+	network       = google_compute_network.vpc[each.value.network_name].id
+}
+#########################################################################
