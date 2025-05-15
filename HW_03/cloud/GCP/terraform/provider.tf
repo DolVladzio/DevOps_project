@@ -3,6 +3,8 @@
 #########################################################################
 provider "google" {
 	region  = local.region
+	credentials = file("~/terraform-key.json")
+	project     = var.project_id
 }
 #########################################################################
 terraform {
