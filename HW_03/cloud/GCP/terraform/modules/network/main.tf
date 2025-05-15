@@ -14,7 +14,7 @@ locals {
 #########################################################################
 resource "google_compute_network" "vpc" {
 	for_each                = local.vpcs_map
-	name                    = "${each.key}-vpc"
+	name                    = each.value.name
 	auto_create_subnetworks = false
 }
 #########################################################################
