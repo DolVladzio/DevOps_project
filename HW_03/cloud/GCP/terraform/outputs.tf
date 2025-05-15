@@ -5,3 +5,15 @@ output "GCP_REGION" {
 	value = local.region
 }
 #########################################################################
+output "subnet_self_links" {
+	value = module.network.subnet_self_links
+}
+#########################################################################
+output "subnet_self_links_by_name" {
+	value = module.network.subnet_self_links_by_name
+}
+#########################################################################
+output "vpc_self_links" {
+	value = module.network.vpc_self_links
+}
+#########################################################################
