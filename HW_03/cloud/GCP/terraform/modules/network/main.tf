@@ -96,3 +96,11 @@ resource "google_compute_firewall" "egress" {
 		if !contains(keys(local.sg_to_instances_map), rule.destination)
 	]))
 }
+#########################################################################
+resource "google_compute_router" "nat_router" {
+	for_each = google_compute_network.vpc
+	name    = "${each.value}-nat-router"
+	network = each.value.self_link
+	region  = var.region
+}
+#########################################################################
