@@ -1,6 +1,6 @@
 {
   "project": {
-    "name": "my-infra",
+    "name": "project",
     "environment": "dev",
     "region": "europe",
     "os": "ubuntu",
