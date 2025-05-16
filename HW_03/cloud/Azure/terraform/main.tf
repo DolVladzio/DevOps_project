@@ -9,11 +9,11 @@ module "network" {
 	source = "./modules/network"
 }
 #########################################################################
-module "vm" {
-	source = "./modules/vm"
-}
+#module "vm" {
+#	source = "./modules/vm"
+#}
 #########################################################################
-module "db_instance" {
-	source = "./modules/db_instance"
-}
+# module "db_instance" {
+# 	source = "./modules/db_instance"
+# }
 #########################################################################
