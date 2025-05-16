@@ -11,7 +11,7 @@ locals {
 	}
 }
 #########################################################################
-resource "google_compute_instance" "default" {
+resource "google_compute_instance" "vm" {
 	for_each = { for vm in var.vm_instances : vm.name => vm }
 	project = var.project_id
 
