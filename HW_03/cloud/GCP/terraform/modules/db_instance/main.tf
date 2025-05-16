@@ -27,3 +27,12 @@ resource "google_sql_database" "databases" {
 	instance = google_sql_database_instance.instances[each.value.name].name
 }
 #########################################################################
+# Create default user for each database
+resource "google_sql_user" "users" {
+	for_each = {for db in var.database : db.name => db}
+
+	name     = var.db_username
+	instance = google_sql_database_instance.instances[each.value.name].name
+	password = var.db_pass
+}
+#########################################################################
