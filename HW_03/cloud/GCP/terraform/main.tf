@@ -44,7 +44,7 @@ module "db_instance" {
 	source = "./modules/db_instance"
 	project_id = var.project_id
 	region = local.region
-	database = local.config.database
+	database = local.config.databases
 	private_networks = module.network.vpc_self_links
 	subnet_self_links = module.network.subnet_self_links_by_name
 	db_pass = local.db_password
