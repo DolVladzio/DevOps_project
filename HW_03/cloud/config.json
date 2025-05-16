@@ -7,9 +7,11 @@
     "terraform_username": "terraform-user",
     "state_bucket_location_gcp": "europe-west3",
     "state_bucket_location_aws": "eu-central-1",
+    "state_bucket_location_azure": "West Europe",
     "bucket_state_name": "state-bucket-name-1377-dsfsdfakdfkadsfk",
     "repository_location_gcp": "europe-west3",
     "repository_location_aws": "eu-central-1",
+    "repository_location_azure": "West Europe",
     "repo_name": "test-artifact-registry"
   },
 
