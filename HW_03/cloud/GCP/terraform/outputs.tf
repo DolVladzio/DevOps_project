@@ -25,5 +25,11 @@ output "private_ips" {
 	value = module.vm.private_ips
 }
 ### DB_INSTANCE #########################################################
-
+output "instance_connection_names" {
+	value = module.db_instance.instance_connection_names
+}
+#########################################################################
+output "database_names" {
+	value = module.db_instance.database_names
+}
 #########################################################################
