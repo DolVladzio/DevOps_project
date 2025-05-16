@@ -7,6 +7,7 @@ locals {
 #########################################################################
 module "network" {
 	source = "./modules/network"
+	resource_group_name = local.config.project.name
 }
 #########################################################################
 #module "vm" {
