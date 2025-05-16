@@ -20,7 +20,8 @@ module "vm" {
 	region = local.region
 	vm_instances = local.config.security_groups
 	subnet_self_links_map = module.network.subnet_self_links_by_name
-
+	project_os = local.config.project.os
+	
 	depends_on = [ module.network ]
 }
 #########################################################################
