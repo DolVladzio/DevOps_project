@@ -33,7 +33,7 @@ module "vm" {
 	source = "./modules/vm"
 	project_id = var.project_id
 	region = local.region
-	vm_instances = local.config.security_groups
+	vm_instances = local.config.vm_instances
 	subnet_self_links_map = module.network.subnet_self_links_by_name
 	project_os = local.config.project.os
 
