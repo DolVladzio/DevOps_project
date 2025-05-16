@@ -8,6 +8,7 @@ locals {
 module "network" {
 	source = "./modules/network"
 	resource_group_name = local.config.project.name
+	location = local.config.project.repository_location_azure
 }
 #########################################################################
 #module "vm" {
