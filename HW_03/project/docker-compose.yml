@@ -5,7 +5,6 @@ services:
   backend:
     build:
       context: .
-      dockerfile: Dockerfile
     image: backend
     container_name: backend
     restart: always
