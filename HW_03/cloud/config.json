@@ -1,17 +1,17 @@
 {
   "project": {
-    "name": "project",
+    "name": "my-infra",
     "environment": "dev",
     "region": "europe",
     "os": "ubuntu",
     "terraform_username": "terraform-user",
-    "state_bucket_location_gcp": "europe-west3",
+    "state_bucket_location_gcp": "europe-west3a",
     "state_bucket_location_aws": "eu-central-1",
-    "state_bucket_location_azure": "West Europe",
-    "bucket_state_name": "state-bucket-name-1377-dsfsdfakdfkadsfk",
+    "state_bucket_location_azurerm": "West US",
+    "bucket_state_name": "state-bucket-name-1377",
     "repository_location_gcp": "europe-west3",
     "repository_location_aws": "eu-central-1",
-    "repository_location_azure": "West Europe",
+    "repository_location_azurerm": "West US",
     "repo_name": "test-artifact-registry"
   },
 
@@ -41,6 +41,36 @@
       ]
     }
   ],
+  
+  "artifact_registry":[
+    {
+      "enabled": true,
+      "provider": "gcp",
+      "name": "my-artifact-registry",
+      "region": "europe-west3",
+      "repository_type": "docker",
+      "format": "DOCKER",
+      "auth_required": true
+    },
+    {
+      "enabled": true,
+      "provider": "aws",
+      "name": "my-artifact-registry",
+      "region": "eu-central-1",
+      "repository_type": "docker",
+      "format": "DOCKER",
+      "auth_required": true
+    },
+    {
+      "enabled": true,
+      "provider": "azurerm",
+      "name": "my-artifact-registry",
+      "region": "",
+      "repository_type": "docker",
+      "format": "DOCKER",
+      "auth_required": true
+    }
+  ],
 
   "vm_instances": [
     {
@@ -52,7 +82,8 @@
       "tags": ["proxy"],
       "public_ip": true,
       "port": 80,
-      "security_groups": ["reverse-proxy-sg"]
+      "security_groups": ["reverse-proxy-sg"],
+      "iam_instance_profile_name": null
     },
     {
       "name": "frontend",
@@ -63,7 +94,8 @@
       "public_ip": false,
       "tags": ["frontend"],
       "port": 3000,
-      "security_groups": ["frontend-sg"]
+      "security_groups": ["frontend-sg"],
+      "iam_instance_profile_name": "EC2_ECR"
     },
     {
       "name": "backend",
@@ -74,7 +106,8 @@
       "public_ip": false,
       "tags": ["backend"],
       "port": 8080,
-      "security_groups": ["backend-sg"]
+      "security_groups": ["backend-sg"],
+      "iam_instance_profile_name": "EC2_ECR"
     },
     {
       "name": "redis",
@@ -85,7 +118,8 @@
       "public_ip": false,
       "tags": ["cache"],
       "port": 6379,
-      "security_groups": ["redis-sg"]
+      "security_groups": ["redis-sg"],
+      "iam_instance_profile_name": null
     },
     {
       "name": "bastion",
@@ -96,9 +130,71 @@
       "public_ip": true,
       "tags": ["bastion", "ssh"],
       "port": 22,
-      "security_groups": ["bastion-sg"]
+      "security_groups": ["bastion-sg"],
+      "iam_instance_profile_name": null
     }
   ],
+
+  "iam": {
+    "aws": [
+      {
+        "name": "EC2_ECR",
+        "description": "Allows EC2 instances to pull images from ECR",
+        "role_policy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "ec2:DescribeTags",
+                "ecs:CreateCluster",
+                "ecs:DeregisterContainerInstance",
+                "ecs:DiscoverPollEndpoint",
+                "ecs:Poll",
+                "ecs:RegisterContainerInstance",
+                "ecs:StartTelemetrySession",
+                "ecs:UpdateContainerInstancesState",
+                "ecs:Submit*",
+                "ecr:GetAuthorizationToken",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Resource": "*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": "ecs:TagResource",
+              "Resource": "*",
+              "Condition": {
+                "StringEquals": {
+                  "ecs:CreateAction": [
+                    "CreateCluster",
+                    "RegisterContainerInstance"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "trust_policy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": ["sts:AssumeRole"],
+              "Principal": {
+                "Service": ["ec2.amazonaws.com"]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "gcp": []
+  },
 
   "databases": [
     {
@@ -218,5 +314,35 @@
         { "protocol": "tcp", "port": 22, "destination": "reverse-proxy-sg" }
       ]
     }
-  ]
+  ],
+
+  "containers": {
+    "backend": {
+      "name": "class_schedule_backend",
+      "image": "class_schedule_backend",
+      "tag": "latest",
+      "ports": ["8080:8080"],
+      "env": [
+        "DB_HOST",
+        "DB_USER",
+        "DB_PASSWORD",
+        "DB_PORT",
+        "DB_NAME",
+        "REDIS_HOST",
+        "REDIS_PORT"
+      ]
+    },
+    "frontend": {
+      "name": "class_schedule_frontend",
+      "image": "class_schedule_frontend",
+      "tag": "latest",
+      "ports": ["3000:3000"]
+    },
+    "redis": {
+      "name": "class_schedule_cache",
+      "image": "redis",
+      "tag": "latest",
+      "ports": ["6379:6379"]
+    }
+  }
 }
