@@ -5,15 +5,14 @@ terraform {
 			version = "~>3.0"
 		}
 	}
-	backend "azurerm" {}
+	# backend "azurerm" {}
 }
 
 provider "azurerm" {
-	resource_provider_registrations = "none"
 	features {}
 }
 
-resource "azurerm_resource_group" "state-demo-secure" {
-	name     = "state-demo"
-	location = "eastus"
+resource "azurerm_resource_group" "main" {
+	name     = "${local.config.project.name}-resource_group"
+	location = local.config.project.state_bucket_location_azurerm
 }
