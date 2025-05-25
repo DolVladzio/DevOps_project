@@ -5,8 +5,8 @@ locals {
 module "vm" {
 	source = "./modules/vm"
 	azurerm_resource_group = azurerm_resource_group.main
-	ssh_keys = local.config.project.ssh_keys
+	ssh_keys = local.config.project.keys
 	vm_instances = local.config.vm_instances
 	username = local.config.project.os
-	admin_username = local.config.project.terraform_username
+	terraform_username = local.config.project.terraform_username
 }
