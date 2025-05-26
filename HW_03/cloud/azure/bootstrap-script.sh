@@ -49,3 +49,33 @@ else
 	echo
 fi
 #########################################################################
+# check_secret_exists() {
+#     az keyvault secret show --vault-name "$1" \
+# 		--name "$2" > /dev/null 2>&1
+# 	return $?
+# }
+# # Function to create a secret if it doesn't already exist
+# createSecret() {
+# 	KEY_VAULT_NAME=$1
+# 	SECRET_NAME=$2
+# 	SECRET_VALUE=$3
+
+# 	if check_secret_exists "$KEY_VAULT_NAME" "$SECRET_NAME"; then
+# 		echo "✅ Secret '$SECRET_NAME' created and value added in Key Vault '$KEY_VAULT_NAME'."
+# 		echo
+# 	else
+# 		echo "Creating secret '$SECRET_NAME'..."
+# 		if az keyvault secret set --vault-name "$KEY_VAULT_NAME" \
+# 				--name "$SECRET_NAME" \
+# 				--value "$SECRET_VALUE" > /dev/null 2>&1; then
+#             echo "✅ Secret '$SECRET_NAME' created and value added."
+# 			echo
+#         else
+#             echo "❌ Failed to create secret '$SECRET_NAME'."
+#             exit 1
+#         fi
+# 	fi
+# }
+# createSecret "$KEY_VAULT_NAME" "$SECRET_NAME_DB_USERNAME" "$DB_USERNAME"
+# createSecret "$KEY_VAULT_NAME" "$SECRET_NAME_DB_PASS" "$DB_PASS"
+#########################################################################
