@@ -5,11 +5,7 @@
     "region": "europe",
     "os": "ubuntu",
     "terraform_username": "terraform-user",
-    "state_bucket_location_gcp": "europe-west3a",
-    "state_bucket_location_aws": "eu-central-1",
     "bucket_state_name": "state-bucket-name-1377",
-    "repository_location_gcp": "europe-west3",
-    "repository_location_aws": "eu-central-1",
     "repo_name": "test-artifact-registry",
 
     "db-username": "postgres",
@@ -54,15 +50,6 @@
   ],
   
   "artifact_registry":[
-    {
-      "enabled": true,
-      "provider": "gcp",
-      "name": "my-artifact-registry",
-      "region": "europe-west3",
-      "repository_type": "docker",
-      "format": "DOCKER",
-      "auth_required": true
-    },
     {
       "enabled": true,
       "provider": "aws",
