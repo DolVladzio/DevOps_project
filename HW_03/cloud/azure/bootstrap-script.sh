@@ -79,3 +79,29 @@ fi
 # createSecret "$KEY_VAULT_NAME" "$SECRET_NAME_DB_USERNAME" "$DB_USERNAME"
 # createSecret "$KEY_VAULT_NAME" "$SECRET_NAME_DB_PASS" "$DB_PASS"
 #########################################################################
+if az storage account show --name "$STORAGE_ACCOUNT_NAME" \
+		--resource-group "$RESOURCE_GROUP" > /dev/null 2>&1; then
+    echo "✅ Azure Storage account '$STORAGE_ACCOUNT_NAME' already exists."
+	echo
+else
+	echo "=== Setting Up Azure Storage for Terraform State ==="
+	az storage account create --name "$STORAGE_ACCOUNT_NAME" \
+		--resource-group "$RESOURCE_GROUP" \
+		--location "$LOCATION" \
+		--sku "Standard_LRS"
+	echo
+fi
+#########################################################################
+if az storage container show \
+		--name "$CONTAINER_NAME" \
+		--account-name "$STORAGE_ACCOUNT_NAME" \
+		--resource-group "$RESOURCE_GROUP" > /dev/null 2>&1; then
+	echo "✅ Storage container '$CONTAINER_NAME' exists in account '$STORAGE_ACCOUNT_NAME'."
+	echo
+else
+	echo "=== Creating the container $CONTAINER_NAME ==="
+	az storage container create --name "$CONTAINER_NAME" \
+		--account-name "$STORAGE_ACCOUNT_NAME"
+	echo
+fi
+#########################################################################
