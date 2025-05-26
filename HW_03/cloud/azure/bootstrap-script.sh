@@ -38,3 +38,14 @@ else
 	echo
 fi
 #########################################################################
+if az keyvault show --name "$KEY_VAULT_NAME" --query "name" -o tsv; then
+    echo "✅ Key Vault '$KEY_VAULT_NAME' exists."
+	echo
+else
+	echo "=== Creating Azure Key Vault ==="
+	az keyvault create --name "$KEY_VAULT_NAME" \
+		--resource-group "$RESOURCE_GROUP" \
+		--location "$LOCATION"
+	echo
+fi
+#########################################################################
