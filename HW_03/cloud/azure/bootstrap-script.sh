@@ -105,3 +105,18 @@ else
 	echo
 fi
 #########################################################################
+ACCOUNT_KEY=$(az storage account keys list \
+	--resource-group "$RESOURCE_GROUP" \
+	--account-name "$STORAGE_ACCOUNT_NAME" \
+	--query "[0].value" -o tsv)
+#########################################################################
+startTerraform() {
+	echo "🚀 STARTING TERRAFORM"
+	terraform init --reconfigure \
+		-backend-config="storage_account_name=$1" \
+		-backend-config="container_name=$2" \
+		-backend-config="key=terraform.tfstate" \
+		-backend-config="access_key=$3"
+}
+startTerraform "$STORAGE_ACCOUNT_NAME" "$CONTAINER_NAME" "$ACCOUNT_KEY"
+#########################################################################
