@@ -7,12 +7,18 @@
     "terraform_username": "terraform-user",
     "state_bucket_location_gcp": "europe-west3a",
     "state_bucket_location_aws": "eu-central-1",
-    "state_bucket_location_azurerm": "West US",
     "bucket_state_name": "state-bucket-name-1377",
     "repository_location_gcp": "europe-west3",
     "repository_location_aws": "eu-central-1",
-    "repository_location_azurerm": "West US",
     "repo_name": "test-artifact-registry",
+
+    "db-username": "postgres",
+    "db-pass": "postgres",
+
+    "location_azurerm": "West Europe",
+    "resource_group_name_azurerm": "resource-group",
+    "key_vault_name_azurerm": "DB-secrets-new",
+    "storage_account_name_azurerm": "terraformuser",
 
     "keys":[
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYLUdSPOk00sjUNjHi53n0y6jnJndZS6GN6JbpKmaQRaBLZn8dHJf+vm1HedDiEf7zZL1gy9ILm6mISC5+wWFS4noxfd6p8Z15Ccsp0I2Z3eTVSceBHRhXSzIUo0YkILtIsW3TS6/IjJtAxKa8xc2aOLLiMIkkhVYZHlkYVGMY+8rgHKrjeipFHE6EgP0NF08NHZrvBjSv8CQneuT/C0G2Yz5f/Z83htFJ3ZfnYt8Yapc3hPVUbyzQ3xY3vW2tTp1X5voT2PkhcCGoVUgwH5sU3zcwruy760zKATHiZMzlKULRoCFGYH0CPWEpPOmEElAJCPyZNBUjbqyBHhsmsAsN peachka@anastasiias-MacBook-Pro.local",
@@ -70,7 +76,7 @@
       "enabled": true,
       "provider": "azurerm",
       "name": "my-artifact-registry",
-      "region": "",
+      "region": "West US",
       "repository_type": "docker",
       "format": "DOCKER",
       "auth_required": true
