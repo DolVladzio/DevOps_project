@@ -27,3 +27,14 @@ else
 	echo
 fi
 #########################################################################
+if az ad sp list --display-name $SERVICE_PRINCIPAL_NAME | grep -q '"displayName": $SERVICE_PRINCIPAL_NAME'; then
+    echo "✅ Service principal exists."
+	echo
+else
+    echo "=== Service principal does not exist. Creating... ==="
+	az ad sp create-for-rbac --name "$SERVICE_PRINCIPAL_NAME" \
+		--role $SERVICE_PRINCIPAL_ROLE \
+		--scopes "/subscriptions/$SUBSCRIPTION_ID" > "$KEY_FILE"
+	echo
+fi
+#########################################################################
