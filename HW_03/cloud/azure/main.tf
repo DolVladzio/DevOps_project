@@ -60,7 +60,6 @@ module "container_registry" {
 
 module "load_balancer" {
   source = "./modules/loadbalancer"
-  # source         = "github.com/.../terraform-module_load-balancer//vm?ref=main"
 
   load_balancer  = local.load_balancer
   project_values = local.project_values
