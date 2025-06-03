@@ -4,7 +4,10 @@ import { TOKEN_BEGIN } from '../constants/tokenBegin';
 // Utility function to get the API base URL
 const getApiBaseUrl = () => {
     const envBaseUrl = process.env.REACT_APP_API_BASE_URL?.trim();
-    return envBaseUrl || 'http://localhost:8080/';
+    if (!envBaseUrl) {
+        throw new Error("API base URL is not defined. Please set REACT_APP_API_BASE_URL in your environment variables.");
+    }
+    return envBaseUrl;
 };
 // Create Axios instance with the base URL
 const instance = axios.create({
