@@ -1,5 +1,7 @@
 module "vm" {
-  source                      = "./modules/vm"
+  # source                      = "./modules/vm"
+  source                      = "github.com/DolVladzio/terraform-module_vm//vm?ref=main"
+
   ssh_keys                    = local.config.project.keys
   vm_instances                = local.config.vm_instances
   hostname                    = local.config.project.vm_hostname
@@ -17,6 +19,7 @@ module "vm" {
 
 module "networks" {
   source              = "./modules/networks"
+
   vnet_name           = local.vnet_name
   location            = local.location
   resource_group_name = local.resource_group_name
@@ -56,8 +59,10 @@ module "container_registry" {
 }
 
 module "load_balancer" {
-    source = "./modules/loadbalancer"
-    load_balancer  = local.load_balancer
+  source = "./modules/loadbalancer"
+  # source         = "github.com/.../terraform-module_load-balancer//vm?ref=main"
+
+  load_balancer  = local.load_balancer
   project_values = local.project_values
   
 }
