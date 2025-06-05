@@ -1,13 +1,11 @@
 ### Stage: 1 ###
-FROM node:12.22.9-alpine AS build
+FROM node:20-alpine AS build
 
 WORKDIR /app
-
-ARG REACT_APP_API_BASE_URL
-ENV REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL
+ENV REACT_APP_API_BASE_URL=/api
 
 COPY package*.json /app/
-RUN npm ci
+RUN npm i
 COPY . .
 
 RUN npm run build
