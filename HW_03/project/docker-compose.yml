@@ -48,6 +48,8 @@ services:
       - .env
     environment:
       REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
+    ports:
+      - "80:80"
     depends_on:
       - postgres
       - backend
