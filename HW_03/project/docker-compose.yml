@@ -34,7 +34,7 @@ services:
     container_name: proxy_pass
     restart: always
     ports:
-      - "80:80"
+      - "3000:3000"
     networks:
       - new_network
 ################################################
