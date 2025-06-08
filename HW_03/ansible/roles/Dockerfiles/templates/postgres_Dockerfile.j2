@@ -4,9 +4,9 @@ ARG POSTGRES_DB
 ARG POSTGRES_USER
 ARG POSTGRES_PASSWORD
 
-ENV POSTGRES_DB={{ item.postgres_db }} \
-    POSTGRES_USER={{ item.postgres_user }} \
-    POSTGRES_PASSWORD={{ item.postgres_password }}
+ENV POSTGRES_DB=$POSTGRES_DB \
+	POSTGRES_USER=$POSTGRES_USER \
+	POSTGRES_PASSWORD=$POSTGRES_PASSWORD
 
 COPY backup.dump /docker-entrypoint-initdb.d/backup.dump
 COPY init_db.sh /docker-entrypoint-initdb.d/init_db.sh
