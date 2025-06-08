@@ -1,0 +1,22 @@
+docker_images:
+  #############################################
+  - name: postgres
+    postgres_version: 12.0-alpine
+    postgres_db: database
+    postgres_user: db_user
+    postgres_password: db_pass
+  #############################################
+  - name: proxy_pass
+    nginx_version: stable-alpine3.20-slim
+  #############################################
+  - name: frontend
+    node_version: 20-alpine
+    react_app_api_base_url: /api
+    nginx_version: stable-alpine3.20-slim
+    expose: 80
+  #############################################
+  - name: backend
+    gradle_version: 7.5.1-jdk11
+    tomcat_version: 9.0.104-jre11-temurin-jammy
+    expose: 8080
+  #############################################

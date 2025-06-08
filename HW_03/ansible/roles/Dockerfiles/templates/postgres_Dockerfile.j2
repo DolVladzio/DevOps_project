@@ -1,0 +1,14 @@
+FROM postgres:{{ item.postgres_version }}
+
+ARG POSTGRES_DB
+ARG POSTGRES_USER
+ARG POSTGRES_PASSWORD
+
+ENV POSTGRES_DB={{ item.postgres_db }} \
+    POSTGRES_USER={{ item.postgres_user }} \
+    POSTGRES_PASSWORD={{ item.postgres_password }}
+
+COPY backup.dump /docker-entrypoint-initdb.d/backup.dump
+COPY init_db.sh /docker-entrypoint-initdb.d/init_db.sh
+
+RUN chmod +x /docker-entrypoint-initdb.d/init_db.sh

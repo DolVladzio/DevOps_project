@@ -1,0 +1,5 @@
+- name: Generate Dockerfiles
+  template:
+    src: "{{ role_path }}/templates/{{ item.name }}_Dockerfile.j2"
+    dest: "{{ role_path }}/../../generated_dockerfiles/{{ item.name }}/Dockerfile"
+  loop: "{{ docker_images }}"

@@ -1,0 +1,11 @@
+# - name: Install Docker
+#   hosts: dolvladzio
+#   become: yes
+#   roles:
+#     - install_docker
+
+- name: Create Dockerfile
+  hosts: dolvladzio
+  become: yes
+  roles:
+    - Dockerfiles
