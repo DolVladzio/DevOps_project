@@ -1,0 +1,79 @@
+################################################
+version: '{{ item.version }}'
+services:
+################################################
+  backend:
+    build:
+      context: .
+    image: {{ item.backend_image_name }}
+    container_name: {{ item.backend_container_name }}
+    restart: always
+    env_file:
+      - .env
+    environment:
+      # PostgreSQL env
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_PORT: ${DB_PORT}
+      # Redis env
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+    ports:
+      - "{{ item.backend_port }}"
+    depends_on:
+      - postgres
+    networks:
+      - {{ item.networks }}
+################################################
+  proxy_pass:
+    build:
+      context: ./proxy_pass
+    image: {{ item.proxy_pass_image_name }}
+    container_name: {{ item.proxy_pass_container_name }}
+    restart: always
+    ports:
+      - "{{ item.proxy_pass_port }}"
+    networks:
+      - {{ item.networks }}
+################################################
+  frontend:
+    build:
+      context: ./frontend
+    image: {{ item.frontend_image_name }}
+    container_name: {{ item.frontend_container_name }}
+    restart: always
+    ports:
+      - "{{ item.frontend_port }}"
+    depends_on:
+      - postgres
+      - backend
+    networks:
+      - {{ item.networks }}
+################################################
+  postgres:
+    build:
+      context: ./postgres
+    image: postgres
+    container_name: postgres
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      - {{ item.networks }}
+################################################
+  redis:
+    image: redis:{{ item.redis_image }}
+    container_name: redis
+    restart: always
+    networks:
+      - {{ item.networks }}
+################################################
+networks:
+  {{ item.networks }}:
+################################################
