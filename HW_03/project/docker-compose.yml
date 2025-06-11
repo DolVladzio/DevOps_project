@@ -3,9 +3,7 @@ version: '3.8'
 services:
 ################################################
   backend:
-    build:
-      context: .
-    image: backend
+    image: dolvladzio/backend
     container_name: backend
     restart: always
     env_file:
@@ -39,15 +37,9 @@ services:
       - new_network
 ################################################
   frontend:
-    build:
-      context: ./frontend
-    image: frontend
+    image: dolvladzio/frontend
     container_name: frontend
     restart: always
-    env_file:
-      - .env
-    environment:
-      REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
     ports:
       - "80:80"
     depends_on:
