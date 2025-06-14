@@ -36,6 +36,7 @@ In order to change docker's images:
 - Frontend's image - [Frontend's image]
 - Backend's image - [Backend's image]
 - Postgres's image - [Postgres]
+- Proxy_pass' image - [Proxy_pass]
 - All services - [All services]
 
 ### Launch
@@ -49,11 +50,12 @@ docker-compose up -d && docker ps
 2. Visit - [http://localhost]
 
 [//]: # (Reference links)
-[.env]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/.env>
-[Frontend's image]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/frontend/Dockerfile>
-[Backend's image]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/Dockerfile>
-[Postgres]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/postgres/Dockerfile>
-[All services]: <https://github.com/DolVladzio/DevOps_project/blob/SCRUM-18-HW_03/HW_03/project/docker-compose.yml>
+[.env]: <https://github.com/DolVladzio/DevOps_project/blob/main/HW_03/project/.env>
+[Frontend's image]: <https://github.com/DolVladzio/DevOps_project/blob/main/HW_03/project/frontend/Dockerfile>
+[Backend's image]: <https://github.com/DolVladzio/DevOps_project/blob/main/HW_03/project/Dockerfile>
+[Postgres]: <https://github.com/DolVladzio/DevOps_project/blob/main/HW_03/project/postgres/Dockerfile>
+[Proxy_pass]: <https://github.com/DolVladzio/DevOps_project/blob/main/HW_03/project/proxy_pass/Dockerfile>
+[All services]: <https://github.com/DolVladzio/DevOps_project/blob/main/HW_03/project/docker-compose.yml>
 [http://localhost]: <http://localhost>
 [Git]: <https://git-scm.com/downloads/linux>
 [Docker/Docker-Compose]: <https://docs.docker.com/engine/install/>
