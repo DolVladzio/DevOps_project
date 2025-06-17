@@ -15,9 +15,11 @@ pipeline {
         }
         stage('Docker image') {
             steps {
-                echo "- Building the docker image ${DOCKER_IMAGE_NAME}..."
-                sh "docker build -t ${DOCKER_IMAGE_NAME} ."
-                echo "- The docker image: ${DOCKER_IMAGE_NAME} was built successfully"
+                dir('HW_03/project/') { // Replace with the correct subdirectory path
+                    echo "- Building the docker image ${DOCKER_IMAGE_NAME}..."
+                    sh "docker build -t ${DOCKER_IMAGE_NAME} ."
+                    echo "- The docker image: ${DOCKER_IMAGE_NAME} was built successfully"
+                }
             }
         }
     }
