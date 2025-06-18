@@ -24,7 +24,7 @@ pipeline {
                 // script {
                 //     buildImageStage(BACKEND_DOCKER_IMAGE_NAME, BACKEND_DOCKERFILE_SOURCE)
                 // }
-                dir($BACKEND_DOCKERFILE_SOURCE) {
+                dir("$BACKEND_DOCKERFILE_SOURCE") {
                     echo "- Building the docker image: ${BACKEND_DOCKER_IMAGE_NAME}..."
                     sh "docker build -t ${BACKEND_DOCKER_IMAGE_NAME} ."
                     echo "- The docker image: ${BACKEND_DOCKER_IMAGE_NAME} was built successfully"
