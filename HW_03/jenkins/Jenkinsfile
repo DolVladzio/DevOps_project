@@ -11,21 +11,31 @@ pipeline {
     }
 
     stages {
-        stage("- Frontend's Stage") {
+        stage('Build Frontend Image') {
             steps {
                 script {
-                    def build_image_stage = load 'build-image.groovy'
-                    build_image_stage(FRONTEND_DOCKER_IMAGE_NAME, FRONTEND_DOCKERFILE_SOURCE)
+                    buildImageStage(FRONTEND_DOCKER_IMAGE_NAME, FRONTEND_DOCKERFILE_SOURCE)
                 }
             }
         }
-        stage("- Backend's Stage") {
+
+        stage('Build Backend Image') {
             steps {
                 script {
-                    def build_image_stage = load 'build-image.groovy'
-                    build_image_stage(BACKEND_DOCKER_IMAGE_NAME, BACKEND_DOCKERFILE_SOURCE)
+                    buildImageStage(BACKEND_DOCKER_IMAGE_NAME, BACKEND_DOCKERFILE_SOURCE)
                 }
             }
+        }
+    }
+}
+
+// Function definition within the Jenkinsfile
+def buildImageStage(String dockerImageName, String dockerfileSource) {
+    stage("Building ${dockerImageName}") {
+        dir(dockerfileSource) {
+            echo "- Building the docker image: ${dockerImageName}..."
+            sh "docker build -t ${dockerImageName} ."
+            echo "- The docker image: ${dockerImageName} was built successfully"
         }
     }
 }
