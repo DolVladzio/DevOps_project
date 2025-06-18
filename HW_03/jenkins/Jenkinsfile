@@ -11,9 +11,9 @@ pipeline {
     }
 
     stages {
-        stage {
+        stage("- Building images") {
             parallel {
-                stage("Frontend's Stage") {
+                stage("- Frontend's Stage") {
                     steps {
                         script {
                             def frontendStage = load 'build-image.groovy'
@@ -21,7 +21,7 @@ pipeline {
                         }
                     }
                 }
-                stage("Backend's Stage") {
+                stage("- Backend's Stage") {
                     steps {
                         script {
                             def build_image_stage = load 'build-image.groovy'
