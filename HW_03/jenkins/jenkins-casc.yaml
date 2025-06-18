@@ -31,6 +31,10 @@ jobs:
       pipelineJob('docker-image') {
         description('Pipeline for building, testing, and deploying Docker images(frontend/backend).')
 
+        triggers {
+          scm('H/5 * * * *') // Poll SCM every 5 minutes
+        }
+
         definition {
           cpsScm {
             scm {
