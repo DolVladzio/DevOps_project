@@ -21,8 +21,13 @@ pipeline {
 
         stage('Build Backend Image') {
             steps {
-                script {
-                    buildImageStage(BACKEND_DOCKER_IMAGE_NAME, BACKEND_DOCKERFILE_SOURCE)
+                // script {
+                //     buildImageStage(BACKEND_DOCKER_IMAGE_NAME, BACKEND_DOCKERFILE_SOURCE)
+                // }
+                dir($BACKEND_DOCKERFILE_SOURCE) {
+                    echo "- Building the docker image: ${BACKEND_DOCKER_IMAGE_NAME}..."
+                    sh "docker build -t ${BACKEND_DOCKER_IMAGE_NAME} ."
+                    echo "- The docker image: ${BACKEND_DOCKER_IMAGE_NAME} was built successfully"
                 }
             }
         }
@@ -30,12 +35,12 @@ pipeline {
 }
 
 // Function definition within the Jenkinsfile
-def buildImageStage(String dockerImageName, String dockerfileSource) {
-    stage("Building ${dockerImageName}") {
-        dir(dockerfileSource) {
-            echo "- Building the docker image: ${dockerImageName}..."
-            sh "docker build -t ${dockerImageName} ."
-            echo "- The docker image: ${dockerImageName} was built successfully"
-        }
-    }
-}
+// def buildImageStage(String dockerImageName, String dockerfileSource) {
+//     stage("Building ${dockerImageName}") {
+//         dir(dockerfileSource) {
+//             echo "- Building the docker image: ${dockerImageName}..."
+//             sh "docker build -t ${dockerImageName} ."
+//             echo "- The docker image: ${dockerImageName} was built successfully"
+//         }
+//     }
+// }
