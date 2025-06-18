@@ -30,14 +30,11 @@ jobs:
   - script: >
       pipelineJob('docker-image') {
         description('Pipeline for building, testing, and deploying Docker images(frontend/backend).')
-        properties([
-            buildDiscarder(
-                logRotator(
-                    daysToKeepStr: '1',
-                    numToKeepStr: '5'
-                )
-            )
-        ])
+
+        triggers {
+          cron('H/5 * * * *')
+        }
+
         definition {
           cpsScm {
             scm {
