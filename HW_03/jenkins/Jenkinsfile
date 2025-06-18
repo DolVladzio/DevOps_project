@@ -11,20 +11,22 @@ pipeline {
     }
 
     stages {
-        parallel {
-            stage("Frontend's Stage") {
-                steps {
-                    script {
-                        def frontendStage = load 'build-image.groovy'
-                        frontendStage(FRONTEND_DOCKER_IMAGE_NAME, FRONTEND_DOCKERFILE_SOURCE)
+        stage {
+            parallel {
+                stage("Frontend's Stage") {
+                    steps {
+                        script {
+                            def frontendStage = load 'build-image.groovy'
+                            frontendStage(FRONTEND_DOCKER_IMAGE_NAME, FRONTEND_DOCKERFILE_SOURCE)
+                        }
                     }
                 }
-            }
-            stage("Backend's Stage") {
-                steps {
-                    script {
-                        def build_image_stage = load 'build-image.groovy'
-                        build_image_stage(BACKEND_DOCKER_IMAGE_NAME, BACKEND_DOCKERFILE_SOURCE)
+                stage("Backend's Stage") {
+                    steps {
+                        script {
+                            def build_image_stage = load 'build-image.groovy'
+                            build_image_stage(BACKEND_DOCKER_IMAGE_NAME, BACKEND_DOCKERFILE_SOURCE)
+                        }
                     }
                 }
             }

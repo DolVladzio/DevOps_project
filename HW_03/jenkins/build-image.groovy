@@ -1,5 +1,5 @@
 def call(String dockerImageName, String dockerfileSource) {
-    stage("${dockerImageName}'s image") {
+    stage("Building ${dockerImageName}") {
         dir(dockerfileSource) {
             echo "- Building the docker image: ${dockerImageName}..."
             sh "docker build -t ${dockerImageName} ."
