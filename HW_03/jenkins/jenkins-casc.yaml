@@ -31,10 +31,6 @@ jobs:
       pipelineJob('docker-image') {
         description('Pipeline for building, testing, and deploying Docker images(frontend/backend).')
 
-        triggers {
-          cron('H/5 * * * *')
-        }
-
         definition {
           cpsScm {
             scm {
