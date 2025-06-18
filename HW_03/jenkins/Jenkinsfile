@@ -11,13 +11,13 @@ pipeline {
     }
 
     stages {
-        stage('Build Frontend Image') {
-            steps {
-                script {
-                    buildImageStage(FRONTEND_DOCKER_IMAGE_NAME, FRONTEND_DOCKERFILE_SOURCE)
-                }
-            }
-        }
+        // stage('Build Frontend Image') {
+        //     steps {
+        //         script {
+        //             buildImageStage(FRONTEND_DOCKER_IMAGE_NAME, FRONTEND_DOCKERFILE_SOURCE)
+        //         }
+        //     }
+        // }
 
         stage('Build Backend Image') {
             steps {
