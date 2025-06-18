@@ -16,8 +16,8 @@ pipeline {
                 stage("- Frontend's Stage") {
                     steps {
                         script {
-                            def frontendStage = load 'build-image.groovy'
-                            frontendStage(FRONTEND_DOCKER_IMAGE_NAME, FRONTEND_DOCKERFILE_SOURCE)
+                            def build_image_stage = load 'build-image.groovy'
+                            build_image_stage(FRONTEND_DOCKER_IMAGE_NAME, FRONTEND_DOCKERFILE_SOURCE)
                         }
                     }
                 }
