@@ -14,7 +14,7 @@ pipeline {
         stage("- Frontend's Stage") {
             steps {
                 script {
-                    def build_image_stage = load 'build-image.groovy'
+                    def build_image_stage = load 'jenkins/build-image.groovy'
                     build_image_stage(FRONTEND_DOCKER_IMAGE_NAME, FRONTEND_DOCKERFILE_SOURCE)
                 }
             }
@@ -22,7 +22,7 @@ pipeline {
         stage("- Backend's Stage") {
             steps {
                 script {
-                    def build_image_stage = load 'build-image.groovy'
+                    def build_image_stage = load 'jenkins/build-image.groovy'
                     build_image_stage(BACKEND_DOCKER_IMAGE_NAME, BACKEND_DOCKERFILE_SOURCE)
                 }
             }
