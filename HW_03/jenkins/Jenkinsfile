@@ -23,18 +23,20 @@ pipeline {
                 }
             }
         }
-        // stage('Building images') {
-        //     steps {
-        //         script {
-        //             // buildImageStage(FRONTEND_DOCKER_IMAGE_NAME, FRONTEND_DOCKERFILE_SOURCE)
-        //             buildImageStage(BACKEND_DOCKER_IMAGE_NAME, BACKEND_DOCKERFILE_SOURCE)
-        //         }
-        //     }
-        // }
+        stage('Building images') {
+            steps {
+                script {
+                    // The frontend's image
+                    // buildImageStage(FRONTEND_DOCKER_IMAGE_NAME, FRONTEND_DOCKERFILE_SOURCE)
+		    // The backend's image
+                    buildImageStage(BACKEND_DOCKER_IMAGE_NAME, BACKEND_DOCKERFILE_SOURCE)
+                }
+            }
+        }
     }
 }
 
-Function definition within the Jenkinsfile
+// Function definition must come first
 def buildImageStage(String dockerImageName, String dockerfileSource) {
     stage("Building ${dockerImageName}") {
         dir("${dockerfileSource}") {
