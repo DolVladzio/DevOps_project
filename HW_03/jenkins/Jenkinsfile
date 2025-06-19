@@ -11,21 +11,23 @@ pipeline {
     }
 
     stages {
-        // stage('Build Frontend Image') {
-        //     steps {
-        //         script {
-        //             buildImageStage(FRONTEND_DOCKER_IMAGE_NAME, FRONTEND_DOCKERFILE_SOURCE)
-        //         }
-        //     }
-        // }
-
-        stage('Build Backend Image') {
+        stage('SonarQube testing') {
             steps {
                 script {
-                    buildImageStage(BACKEND_DOCKER_IMAGE_NAME, BACKEND_DOCKERFILE_SOURCE)
+                    dir("${BACKEND_DOCKERFILE_SOURCE}") {
+                        sh "gradle sonarqube"
+                    }
                 }
             }
         }
+        // stage('Building images') {
+        //     steps {
+        //         script {
+        //             // buildImageStage(FRONTEND_DOCKER_IMAGE_NAME, FRONTEND_DOCKERFILE_SOURCE)
+        //             buildImageStage(BACKEND_DOCKER_IMAGE_NAME, BACKEND_DOCKERFILE_SOURCE)
+        //         }
+        //     }
+        // }
     }
 }
 
