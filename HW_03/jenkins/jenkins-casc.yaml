@@ -25,6 +25,11 @@ tool:
       - name: "Default"
         home: "/usr/bin/git"
 
+appearance:
+  themeManager:
+    disableUserThemes: true
+    theme: "darkSystem"
+
 # Sample Job Configuration
 jobs:
   - script: >
