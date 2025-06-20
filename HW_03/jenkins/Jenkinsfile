@@ -6,7 +6,7 @@ pipeline {
 
     environment {
         // Dynamically generate a timestamp
-        CURRENT_TIMESTAMP = new Date().format('yyyyMMddHHmmss', TimeZone.getTimeZone('UTC'))
+        CURRENT_TIMESTAMP = new Date().format('yyyy-MM-dd-HH-mm-ss', TimeZone.getTimeZone('UTC'))
         // Frontend
         frontend_docker_image_name = "frontend-${CURRENT_TIMESTAMP}"
         frontend_dockerfile_source = "HW_03/project/frontend/"
