@@ -63,4 +63,4 @@ pipeline {
 //     }
 // }
 // A function to set time for the env
-def currentTime = new Date().format('yyyy-MM-dd-HH-mm-ss', TimeZone.getTimeZone('UTC'))
+def currentTime = new Date().format('yyyyMMddHHmmss', TimeZone.getTimeZone('UTC'))
