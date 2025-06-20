@@ -18,7 +18,7 @@ pipeline {
         backend_service_name      = "backend"
         backend_sonar_command     = "gradle sonar"
         // Docker
-        docker_cred_id            = "03f97223-5b61-4175-b3e8-650d4de0e795"
+        docker_cred_id            = "" // id of the cred
     }
 
     stages {
