@@ -20,7 +20,7 @@ pipeline {
     }
 
     stages {
-        stage('SonarQube testing') {
+        stage('Test') {
             steps {
                 script {
                     // The frontend's sonarqube testing
@@ -30,7 +30,7 @@ pipeline {
                 }
             }
         }
-        stage('Building images') {
+        stage('Build') {
             steps {
                 script {
                     // The frontend's image building
@@ -40,25 +40,53 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+            steps {
+                script {
+                    // Deploying the frontend's image to the dockerhub
+		            // Deploying the backend's image to the dockerhub
+                }
+            }
+        }
+        stage('Cleanup') {
+            steps {
+                script {
+                    // Deleting all images and cleaning the docker's system
+                    sh "docker image prune -a && docker system prune --volumes"
+                }
+            }
+        }
     }
-}
 
-// A function to build images
-def buildImageStage(String dockerImageName, String dockerfileSource) {
-    stage("Building ${dockerImageName}") {
-        dir("${dockerfileSource}") {
-            echo "- Building the docker image: ${dockerImageName}..."
-            sh "docker build -t ${dockerImageName} ."
-            echo "- The docker image: ${dockerImageName} was built successfully"
+    post {
+        always {
+            echo "- Pipeline comleted!"
+        }
+        success {
+            echo '- Deployment to staging successful!'
+        }
+        failure {
+            echo '- Pipeline failed! Check the logs for errors.'
         }
     }
 }
+
 // A function to use SonarQube
 def sonarqubeTest(String command, String dockerfileSource, String serviceName) {
     stage("- Testing: ${serviceName}") {
         dir("${dockerfileSource}") {
             sh "${command}"
             echo "- ${serviceName} was tested successfully via SonarQube"
+        }
+    }
+}
+// A function to build images
+def buildImageStage(String dockerImageName, String dockerfileSource) {
+    stage("- Building: ${dockerImageName}") {
+        dir("${dockerfileSource}") {
+            echo "- Building the docker image: ${dockerImageName}..."
+            sh "docker build -t ${dockerImageName} ."
+            echo "- The docker image: ${dockerImageName} was built successfully"
         }
     }
 }
