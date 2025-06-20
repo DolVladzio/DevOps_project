@@ -68,10 +68,11 @@ pipeline {
         }
         stage('Cleanup') {
             steps {
-                script {
-                    // Deleting all images and cleaning the docker's system
-                    sh "docker image prune -a && docker system prune --volumes"
-                }
+                sh """
+                echo "- Cleaning up unused Docker images and volumes"
+                docker image prune -a -f
+                docker system prune --volumes -f
+                """
             }
         }
     }
