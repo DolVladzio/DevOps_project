@@ -24,43 +24,41 @@ pipeline {
             steps {
                 script {
                     // The frontend's sonarqube testing
-                    // sonarqubeTest(frontend_sonar_command, frontend_dockerfile_source, frontend_service_name)
+                    sonarqubeTest(frontend_sonar_command, frontend_dockerfile_source, frontend_service_name)
                     // The backend's sonarqube testing
-                    // sonarqubeTest(backend_sonar_command, backend_dockerfile_source, backend_service_name)
-                    echo "${frontend_docker_image_name}"
-                    echo "${backend_docker_image_name}"
+                    sonarqubeTest(backend_sonar_command, backend_dockerfile_source, backend_service_name)
                 }
             }
         }
-        // stage('Building images') {
-        //     steps {
-        //         script {
-        //             // The frontend's image building
-        //             // buildImageStage(frontend_docker_image_name, frontend_dockerfile_source)
-		//             // The backend's image building
-        //             buildImageStage(backend_docker_image_name, backend_dockerfile_source)
-        //         }
-        //     }
-        // }
+        stage('Building images') {
+            steps {
+                script {
+                    // The frontend's image building
+                    buildImageStage(frontend_docker_image_name, frontend_dockerfile_source)
+		            // The backend's image building
+                    buildImageStage(backend_docker_image_name, backend_dockerfile_source)
+                }
+            }
+        }
     }
 }
 
-// // A function to build images
-// def buildImageStage(String dockerImageName, String dockerfileSource) {
-//     stage("Building ${dockerImageName}") {
-//         dir("${dockerfileSource}") {
-//             echo "- Building the docker image: ${dockerImageName}..."
-//             sh "docker build -t ${dockerImageName} ."
-//             echo "- The docker image: ${dockerImageName} was built successfully"
-//         }
-//     }
-// }
-// // A function to use SonarQube
-// def sonarqubeTest(String command, String dockerfileSource, String serviceName) {
-//     stage("- Testing: ${serviceName}") {
-//         dir("${dockerfileSource}") {
-//             sh "${command}"
-//             echo "- ${serviceName} was tested successfully"
-//         }
-//     }
-// }
+// A function to build images
+def buildImageStage(String dockerImageName, String dockerfileSource) {
+    stage("Building ${dockerImageName}") {
+        dir("${dockerfileSource}") {
+            echo "- Building the docker image: ${dockerImageName}..."
+            sh "docker build -t ${dockerImageName} ."
+            echo "- The docker image: ${dockerImageName} was built successfully"
+        }
+    }
+}
+// A function to use SonarQube
+def sonarqubeTest(String command, String dockerfileSource, String serviceName) {
+    stage("- Testing: ${serviceName}") {
+        dir("${dockerfileSource}") {
+            sh "${command}"
+            echo "- ${serviceName} was tested successfully via SonarQube"
+        }
+    }
+}
