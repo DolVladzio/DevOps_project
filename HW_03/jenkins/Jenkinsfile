@@ -8,12 +8,12 @@ pipeline {
         // Dynamically generate a timestamp
         CURRENT_TIMESTAMP = new Date().format('yyyy-MM-dd-HH-mm-ss', TimeZone.getTimeZone('UTC'))
         // Frontend
-        frontend_docker_image_name = "frontend-${CURRENT_TIMESTAMP}"
+        frontend_docker_image_name = "dolvladzio/frontend-${CURRENT_TIMESTAMP}"
         frontend_dockerfile_source = "HW_03/project/frontend/"
         frontend_service_name      = "frontend"
         frontend_sonar_command     = "npm run sonar"
         // Backend
-        backend_docker_image_name = "frontend-${CURRENT_TIMESTAMP}"
+        backend_docker_image_name = "dolvladzio/backend-${CURRENT_TIMESTAMP}"
         backend_dockerfile_source = "HW_03/project/"
         backend_service_name      = "backend"
         backend_sonar_command     = "gradle sonar"
@@ -22,33 +22,32 @@ pipeline {
     }
 
     stages {
-        // stage('Test') {
-        //     steps {
-        //         script {
-        //             // The frontend's sonarqube testing
-        //             sonarqubeTest(frontend_sonar_command, frontend_dockerfile_source, frontend_service_name)
-        //             // The backend's sonarqube testing
-        //             sonarqubeTest(backend_sonar_command, backend_dockerfile_source, backend_service_name)
-        //         }
-        //     }
-        // }
-        // stage('Build') {
-        //     steps {
-        //         script {
-        //             // The frontend's image building
-        //             buildImageStage(frontend_docker_image_name, frontend_dockerfile_source)
-		//             // The backend's image building
-        //             buildImageStage(backend_docker_image_name, backend_dockerfile_source)
-        //         }
-        //     }
-        // }
+        stage('Test') {
+            steps {
+                script {
+                    // The frontend's sonarqube testing
+                    sonarqubeTest(frontend_sonar_command, frontend_dockerfile_source, frontend_service_name)
+                    // The backend's sonarqube testing
+                    sonarqubeTest(backend_sonar_command, backend_dockerfile_source, backend_service_name)
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    // The frontend's image building
+                    buildImageStage(frontend_docker_image_name, frontend_dockerfile_source)
+		            // The backend's image building
+                    buildImageStage(backend_docker_image_name, backend_dockerfile_source)
+                }
+            }
+        }
         stage('Logging') {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: "$docker_cred_id", 
                                                     usernameVariable: 'DOCKER_USERNAME', 
                                                     passwordVariable: 'DOCKER_PASSWORD')]) {
-                        // Use the credentials here
                         sh """
                         echo "Logging into DockerHub"
                         echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
@@ -57,22 +56,24 @@ pipeline {
                 }
             }
         }
-        // stage('Deploy') {
-        //     steps {
-        //         script {
-        //             // Deploying the frontend's image to the dockerhub
-		//             // Deploying the backend's image to the dockerhub
-        //         }
-        //     }
-        // }
-        // stage('Cleanup') {
-        //     steps {
-        //         script {
-        //             // Deleting all images and cleaning the docker's system
-        //             // sh "docker image prune -a && docker system prune --volumes"
-        //         }
-        //     }
-        // }
+        stage('Deploy') {
+            steps {
+                script {
+                    // Deploying the frontend's image to the dockerhub
+                    pushImage(frontend_docker_image_name, frontend_dockerfile_source)
+		            // Deploying the backend's image to the dockerhub
+                    pushImage(backend_docker_image_name, backend_dockerfile_source)
+                }
+            }
+        }
+        stage('Cleanup') {
+            steps {
+                script {
+                    // Deleting all images and cleaning the docker's system
+                    sh "docker image prune -a && docker system prune --volumes"
+                }
+            }
+        }
     }
 
     post {
@@ -99,11 +100,19 @@ def sonarqubeTest(String command, String dockerfileSource, String serviceName) {
 }
 // A function to build images
 def buildImageStage(String dockerImageName, String dockerfileSource) {
-    stage("- Building: ${dockerImageName}") {
+    stage("- Building the image: ${dockerImageName}") {
         dir("${dockerfileSource}") {
-            echo "- Building the docker image: ${dockerImageName}..."
             sh "docker build -t ${dockerImageName} ."
             echo "- The docker image: ${dockerImageName} was built successfully"
+        }
+    }
+}
+// A function to build images
+def pushImage(String dockerImageName, String dockerfileSource) {
+    stage("- Pushing the image: ${dockerImageName}") {
+        dir("${dockerfileSource}") {
+            sh "docker push ${dockerImageName}"
+            echo "- The docker image: ${dockerImageName} was pushed successfully to the DockerHub"
         }
     }
 }
