@@ -57,22 +57,22 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
-            steps {
-                script {
-                    // Deploying the frontend's image to the dockerhub
-		            // Deploying the backend's image to the dockerhub
-                }
-            }
-        }
-        stage('Cleanup') {
-            steps {
-                script {
-                    // Deleting all images and cleaning the docker's system
-                    // sh "docker image prune -a && docker system prune --volumes"
-                }
-            }
-        }
+        // stage('Deploy') {
+        //     steps {
+        //         script {
+        //             // Deploying the frontend's image to the dockerhub
+		//             // Deploying the backend's image to the dockerhub
+        //         }
+        //     }
+        // }
+        // stage('Cleanup') {
+        //     steps {
+        //         script {
+        //             // Deleting all images and cleaning the docker's system
+        //             // sh "docker image prune -a && docker system prune --volumes"
+        //         }
+        //     }
+        // }
     }
 
     post {
