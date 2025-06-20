@@ -17,26 +17,43 @@ pipeline {
         backend_dockerfile_source = "HW_03/project/"
         backend_service_name      = "backend"
         backend_sonar_command     = "gradle sonar"
+        // Docker
+        docker_cred_id            = "03f97223-5b61-4175-b3e8-650d4de0e795"
     }
 
     stages {
-        stage('Test') {
+        // stage('Test') {
+        //     steps {
+        //         script {
+        //             // The frontend's sonarqube testing
+        //             sonarqubeTest(frontend_sonar_command, frontend_dockerfile_source, frontend_service_name)
+        //             // The backend's sonarqube testing
+        //             sonarqubeTest(backend_sonar_command, backend_dockerfile_source, backend_service_name)
+        //         }
+        //     }
+        // }
+        // stage('Build') {
+        //     steps {
+        //         script {
+        //             // The frontend's image building
+        //             buildImageStage(frontend_docker_image_name, frontend_dockerfile_source)
+		//             // The backend's image building
+        //             buildImageStage(backend_docker_image_name, backend_dockerfile_source)
+        //         }
+        //     }
+        // }
+        stage('Logging') {
             steps {
                 script {
-                    // The frontend's sonarqube testing
-                    sonarqubeTest(frontend_sonar_command, frontend_dockerfile_source, frontend_service_name)
-                    // The backend's sonarqube testing
-                    sonarqubeTest(backend_sonar_command, backend_dockerfile_source, backend_service_name)
-                }
-            }
-        }
-        stage('Build') {
-            steps {
-                script {
-                    // The frontend's image building
-                    buildImageStage(frontend_docker_image_name, frontend_dockerfile_source)
-		            // The backend's image building
-                    buildImageStage(backend_docker_image_name, backend_dockerfile_source)
+                    withCredentials([usernamePassword(credentialsId: "$docker_cred_id", 
+                                                    usernameVariable: 'DOCKER_USERNAME', 
+                                                    passwordVariable: 'DOCKER_PASSWORD')]) {
+                        // Use the credentials here
+                        sh """
+                        echo "Logging into DockerHub"
+                        echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+                        """
+                    }
                 }
             }
         }
@@ -52,7 +69,7 @@ pipeline {
             steps {
                 script {
                     // Deleting all images and cleaning the docker's system
-                    sh "docker image prune -a && docker system prune --volumes"
+                    // sh "docker image prune -a && docker system prune --volumes"
                 }
             }
         }
