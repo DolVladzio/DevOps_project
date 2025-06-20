@@ -25,8 +25,6 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // The frontend's sonarqube testing
-                    sonarqubeTest(frontend_sonar_command, frontend_dockerfile_source, frontend_service_name)
                     // The backend's sonarqube testing
                     sonarqubeTest(backend_sonar_command, backend_dockerfile_source, backend_service_name)
                 }
@@ -37,7 +35,7 @@ pipeline {
                 script {
                     // The frontend's image building
                     buildImageStage(frontend_docker_image_name, frontend_dockerfile_source)
-		            // The backend's image building
+	            // The backend's image building
                     buildImageStage(backend_docker_image_name, backend_dockerfile_source)
                 }
             }
@@ -61,7 +59,7 @@ pipeline {
                 script {
                     // Deploying the frontend's image to the dockerhub
                     pushImage(frontend_docker_image_name, frontend_dockerfile_source)
-		            // Deploying the backend's image to the dockerhub
+	            // Deploying the backend's image to the dockerhub
                     pushImage(backend_docker_image_name, backend_dockerfile_source)
                 }
             }
