@@ -34,8 +34,8 @@ pipeline {
             steps {
                 script {
                     // The frontend's image building
-                    // buildImageStage(frontend_docker_image_name, frontend_dockerfile_source)
-	                // The backend's image building
+                    buildImageStage(frontend_docker_image_name, frontend_dockerfile_source)
+	            // The backend's image building
                     buildImageStage(backend_docker_image_name, backend_dockerfile_source)
                 }
             }
@@ -58,8 +58,8 @@ pipeline {
             steps {
                 script {
                     // Deploying the frontend's image to the dockerhub
-                    // pushImage(frontend_docker_image_name, frontend_dockerfile_source)
-	                // Deploying the backend's image to the dockerhub
+                    pushImage(frontend_docker_image_name, frontend_dockerfile_source)
+	            // Deploying the backend's image to the dockerhub
                     pushImage(backend_docker_image_name, backend_dockerfile_source)
                 }
             }
