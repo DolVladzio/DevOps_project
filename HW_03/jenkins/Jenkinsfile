@@ -5,13 +5,15 @@ pipeline {
     }
 
     environment {
+        // Dynamically generate a timestamp
+        CURRENT_TIMESTAMP = new Date().format('yyyyMMddHHmmss', TimeZone.getTimeZone('UTC'))
         // Frontend
-        frontend_docker_image_name = "frontend-${currentTime}"
+        frontend_docker_image_name = "frontend-${CURRENT_TIMESTAMP}"
         frontend_dockerfile_source = "HW_03/project/frontend/"
         frontend_service_name      = "frontend"
         frontend_sonar_command     = "npm run sonar"
         // Backend
-        backend_docker_image_name = "frontend-${currentTime}"
+        backend_docker_image_name = "frontend-${CURRENT_TIMESTAMP}"
         backend_dockerfile_source = "HW_03/project/"
         backend_service_name      = "backend"
         backend_sonar_command     = "gradle sonar"
@@ -62,5 +64,3 @@ pipeline {
 //         }
 //     }
 // }
-// A function to set time for the env
-def currentTime = new Date().format('yyyyMMddHHmmss', TimeZone.getTimeZone('UTC'))
