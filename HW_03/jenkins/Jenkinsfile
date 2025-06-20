@@ -8,12 +8,12 @@ pipeline {
         // Dynamically generate a timestamp
         CURRENT_TIMESTAMP = new Date().format('yyyy-MM-dd-HH-mm-ss', TimeZone.getTimeZone('UTC'))
         // Frontend
-        frontend_docker_image_name = "dolvladzio/frontend" //-${CURRENT_TIMESTAMP}
+        frontend_docker_image_name = "dolvladzio/frontend-${CURRENT_TIMESTAMP}"
         frontend_dockerfile_source = "HW_03/project/frontend/"
         frontend_service_name      = "frontend"
         frontend_sonar_command     = "npm run sonar"
         // Backend
-        backend_docker_image_name = "dolvladzio/backend" //-${CURRENT_TIMESTAMP}
+        backend_docker_image_name = "dolvladzio/backend-${CURRENT_TIMESTAMP}"
         backend_dockerfile_source = "HW_03/project/"
         backend_service_name      = "backend"
         backend_sonar_command     = "gradle sonar"
@@ -22,26 +22,26 @@ pipeline {
     }
 
     stages {
-        // stage('Test') {
-        //     steps {
-        //         script {
-        //             // The frontend's sonarqube testing
-        //             sonarqubeTest(frontend_sonar_command, frontend_dockerfile_source, frontend_service_name)
-        //             // The backend's sonarqube testing
-        //             sonarqubeTest(backend_sonar_command, backend_dockerfile_source, backend_service_name)
-        //         }
-        //     }
-        // }
-        // stage('Build') {
-        //     steps {
-        //         script {
-        //             // The frontend's image building
-        //             buildImageStage(frontend_docker_image_name, frontend_dockerfile_source)
-		//             // The backend's image building
-        //             buildImageStage(backend_docker_image_name, backend_dockerfile_source)
-        //         }
-        //     }
-        // }
+        stage('Test') {
+            steps {
+                script {
+                    // The frontend's sonarqube testing
+                    sonarqubeTest(frontend_sonar_command, frontend_dockerfile_source, frontend_service_name)
+                    // The backend's sonarqube testing
+                    sonarqubeTest(backend_sonar_command, backend_dockerfile_source, backend_service_name)
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    // The frontend's image building
+                    buildImageStage(frontend_docker_image_name, frontend_dockerfile_source)
+		            // The backend's image building
+                    buildImageStage(backend_docker_image_name, backend_dockerfile_source)
+                }
+            }
+        }
         stage('Logging') {
             steps {
                 script {
@@ -82,7 +82,7 @@ pipeline {
             echo "- Pipeline comleted!"
         }
         success {
-            echo '- Deployment to staging successful!'
+            echo '- Pipeline passed successfully!'
         }
         failure {
             echo '- Pipeline failed! Check the logs for errors.'
