@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    tools {
-        gradle "Gradle 7.5.1"
-    }
+    // tools {
+    //     gradle "Gradle 7.5.1"
+    // }
 
     environment {
         // Dynamically generate a timestamp
