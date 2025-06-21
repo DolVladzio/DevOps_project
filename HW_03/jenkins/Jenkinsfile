@@ -15,7 +15,7 @@ pipeline {
         backend_dockerfile_source = "HW_03/project/"
         backend_service_name      = "backend"
         // Docker
-        docker_cred_id            = "" // id of the cred
+        docker_cred_id            = "6e8a09a8-0e72-47d4-80b6-efff31fa972d" // id of the cred
     }
 
     stages {
@@ -60,7 +60,7 @@ pipeline {
                 script {
                     // Deploying the frontend's image to the dockerhub
                     pushImage(frontend_docker_image_name, frontend_dockerfile_source)
-	            // Deploying the backend's image to the dockerhub
+	                // Deploying the backend's image to the dockerhub
                     pushImage(backend_docker_image_name, backend_dockerfile_source)
                 }
             }
