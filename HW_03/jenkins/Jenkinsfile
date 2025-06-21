@@ -8,10 +8,10 @@ pipeline {
         // Dynamically generate a timestamp
         CURRENT_TIMESTAMP = new Date().format('yyyy-MM-dd-HH-mm-ss', TimeZone.getTimeZone('UTC'))
         // Frontend
-        frontend_docker_image_name = "dolvladzio/frontend-${CURRENT_TIMESTAMP}"
+        frontend_docker_image_name = "dolvladzio/frontend:v${CURRENT_TIMESTAMP}"
         frontend_dockerfile_source = "HW_03/project/frontend/"
         // Backend
-        backend_docker_image_name = "dolvladzio/backend-${CURRENT_TIMESTAMP}"
+        backend_docker_image_name = "dolvladzio/backend:v${CURRENT_TIMESTAMP}"
         backend_dockerfile_source = "HW_03/project/"
         backend_service_name      = "backend"
         // Docker
@@ -34,10 +34,10 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // The frontend's image building
-                    // buildImageStage(frontend_docker_image_name, frontend_dockerfile_source)
 	                // The backend's image building
                     buildImageStage(backend_docker_image_name, backend_dockerfile_source)
+                    // The frontend's image building
+                    buildImageStage(frontend_docker_image_name, frontend_dockerfile_source)
                 }
             }
         }
@@ -58,10 +58,10 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Deploying the frontend's image to the dockerhub
-                    // pushImage(frontend_docker_image_name, frontend_dockerfile_source)
 	                // Deploying the backend's image to the dockerhub
                     pushImage(backend_docker_image_name, backend_dockerfile_source)
+                    // Deploying the frontend's image to the dockerhub
+                    pushImage(frontend_docker_image_name, frontend_dockerfile_source)
                 }
             }
         }
