@@ -24,9 +24,9 @@ pipeline {
                 script {
                     env.USER_CHOICE = input(
                         id: 'UserInput',
-                        message: '- Clean up unused Docker images and volumes?: ',
+                        message: '- Clean up unused Docker images and volumes?',
                         parameters: [
-                            choice(name: 'action', choices: ['Yes', 'No'], description: '- Select an action: ')
+                            choice(name: 'action', choices: ['Yes', 'No'], description: '- Select an action')
                         ]
                     )
                     echo "- User selected: ${env.USER_CHOICE}"
