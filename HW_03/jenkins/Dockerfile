@@ -1,12 +1,13 @@
-FROM jenkins/jenkins:2.414.2-jdk11
+FROM jenkins/jenkins:lts-jdk11
 
-# Switch to root user for package installation
+# Switch to root user for installing dependencies
 USER root
 
-# Install required dependencies and Docker CLI
+# Install required tools and Docker CLI
 RUN apt-get update && apt-get install -y --no-install-recommends \
     lsb-release \
-    python3-pip && \
+    python3-pip \
+    curl && \
     curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
     https://download.docker.com/linux/debian/gpg && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
@@ -17,6 +18,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Switch back to Jenkins user
 USER jenkins
 
-RUN mkdir -p /usr/share/jenkins/ref/plugins && \
-    curl -o /usr/share/jenkins/ref/plugins/blueocean.jpi https://updates.jenkins.io/latest/blueocean.hpi && \
-    curl -o /usr/share/jenkins/ref/plugins/docker-workflow.jpi https://updates.jenkins.io/latest/docker-workflow.hpi
+# Install plugins
+RUN jenkins-plugin-cli --verbose --plugins \
+    blueocean:latest \
+    docker-workflow:latest \
+    git:latest \
+    pipeline-stage-view:latest \
+    workflow-aggregator:latest
+
+# Expose default Jenkins port
+EXPOSE 8080
+
+# Set environment variables for Jenkins
+ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+ENV JENKINS_OPTS="--httpPort=8080"
