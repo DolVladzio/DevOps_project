@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     // The frontend's image building
-                    buildImageStage(frontend_docker_image_name, frontend_dockerfile_source)
+                    // buildImageStage(frontend_docker_image_name, frontend_dockerfile_source)
 	                // The backend's image building
                     buildImageStage(backend_docker_image_name, backend_dockerfile_source)
                 }
