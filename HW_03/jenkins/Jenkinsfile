@@ -78,6 +78,8 @@ pipeline {
                         docker image prune -a -f
                         docker system prune --volumes -f
                         echo "- The system was cleaned up!"
+                        rm -f ~/.docker/config.json || true
+                        docker logout
                         """
                     } else {
                         echo "- Cleaning was skipped!"
