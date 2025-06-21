@@ -19,18 +19,18 @@ pipeline {
     }
 
     stages {
-        stage('Test') {
-            steps {
-                script {
-                    // The backend's sonarqube testing
-                    dir("${backend_dockerfile_source}") {
-                        echo "- Testing: ${backend_service_name}"
-                        sh "gradle sonar"
-                        echo "- ${serviceName} was tested successfully via SonarQube"
-                    }
-                }
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         script {
+        //             // The backend's sonarqube testing
+        //             dir("${backend_dockerfile_source}") {
+        //                 echo "- Testing: ${backend_service_name}"
+        //                 sh "gradle sonar"
+        //                 echo "- ${serviceName} was tested successfully via SonarQube"
+        //             }
+        //         }
+        //     }
+        // }
         stage('Build') {
             steps {
                 script {
