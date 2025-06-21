@@ -50,12 +50,12 @@ docker-compose up -d && docker ps
 2. Visit - [http://localhost]
 
 [//]: # (Reference links)
-[.env]: <https://github.com/DolVladzio/DevOps_project/blob/main/HW_03/project/.env>
-[Frontend's image]: <https://github.com/DolVladzio/DevOps_project/blob/main/HW_03/project/frontend/Dockerfile>
-[Backend's image]: <https://github.com/DolVladzio/DevOps_project/blob/main/HW_03/project/Dockerfile>
-[Postgres]: <https://github.com/DolVladzio/DevOps_project/blob/main/HW_03/project/postgres/Dockerfile>
-[Proxy_pass]: <https://github.com/DolVladzio/DevOps_project/blob/main/HW_03/project/proxy_pass/Dockerfile>
-[All services]: <https://github.com/DolVladzio/DevOps_project/blob/main/HW_03/project/docker-compose.yml>
+[.env]: <https://github.com/DolVladzio/DevOps_project/blob/main/project/.env>
+[Frontend's image]: <https://github.com/DolVladzio/DevOps_project/blob/main/project/frontend/Dockerfile>
+[Backend's image]: <https://github.com/DolVladzio/DevOps_project/blob/main/project/Dockerfile>
+[Postgres]: <https://github.com/DolVladzio/DevOps_project/blob/main/project/postgres/Dockerfile>
+[Proxy_pass]: <https://github.com/DolVladzio/DevOps_project/blob/main/project/proxy_pass/Dockerfile>
+[All services]: <https://github.com/DolVladzio/DevOps_project/blob/main/project/docker-compose.yml>
 [http://localhost]: <http://localhost>
 [Git]: <https://git-scm.com/downloads/linux>
 [Docker/Docker-Compose]: <https://docs.docker.com/engine/install/>
