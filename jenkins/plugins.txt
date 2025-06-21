@@ -1,0 +1,9 @@
+blueocean:latest
+docker-workflow:latest
+git:latest
+pipeline-stage-view:latest
+workflow-aggregator:latest
+configuration-as-code:latest
+gradle:latest
+theme-manager:latest
+dark-theme:latest
