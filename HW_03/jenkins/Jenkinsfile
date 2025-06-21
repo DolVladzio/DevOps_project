@@ -4,10 +4,6 @@ pipeline {
     //     gradle "Gradle 7.5.1"
     // }
 
-    parameters {
-        booleanParam(name: "Cleaning", defaultValue: false)
-    }
-
     environment {
         // Dynamically generate a timestamp
         CURRENT_TIMESTAMP = new Date().format('yyyy-MM-dd-HH-mm-ss', TimeZone.getTimeZone('UTC'))
@@ -23,6 +19,20 @@ pipeline {
     }
 
     stages {
+        stage('User Input') {
+            steps {
+                script {
+                    env.USER_CHOICE = input(
+                        id: 'UserInput',
+                        message: '- Clean up unused Docker images and volumes?: ',
+                        parameters: [
+                            choice(name: 'action', choices: ['Yes', 'No'], description: '- Select an action: ')
+                        ]
+                    )
+                    echo "- User selected: ${env.USER_CHOICE}"
+                }
+            }
+        }
         // stage('Test') {
         //     steps {
         //         script {
@@ -72,16 +82,16 @@ pipeline {
         stage('Cleanup') {
             steps {
                 script {
-                    if (params.Cleaning) {
+                    if (env.USER_CHOICE == 'Yes') {
                         sh """
-                        echo "- Cleaning up unused Docker images and volumes..."
-                        docker image prune -a -f
-                        docker system prune --volumes -f
-                        echo "- The system was cleaned up!"
-                        rm -f ~/.docker/config.json || true
-                        docker logout
+                            echo "- Cleaning up unused Docker images and volumes..."
+                            docker image prune -a -f
+                            docker system prune --volumes -f
+                            echo "- The system was cleaned up!"
+                            rm -f ~/.docker/config.json || true
+                            docker logout
                         """
-                    } else {
+                    } else if (env.USER_CHOICE == 'No') {
                         echo "- Cleaning was skipped!"
                     }
                 }
